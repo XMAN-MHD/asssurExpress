@@ -1,31 +1,18 @@
-// import packages
-import { MongoClient, ServerApiVersion } from "mongodb";
+import mongoose from 'mongoose';
 
-// access environment variables for the database connection
-const { MONGODB_URI, MONGODB_DATABASE } = process.env;
+const { MONGODB_URI } = process.env;
 
-// get a client access
-const client = new MongoClient(MONGODB_URI, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+const connectDB = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB with Mongoose!");
+  } catch (err) {
+    console.error(err);
+    process.exit(1); // Exit process with failure
+  }
+};
 
-try {
-    // Connect the client to the server
-    await client.connect();
-    
-    // Send a ping to confirm a successful connection
-    await client.db().command({ ping: 1 });
-    
-    //send a message to confirm a successful connection
-    console.log("Connected to MongoDB!");
-
-} catch (err) {
-  console.error(err);
-}
-
-// select the DB to use then export it to the server
-export const db = client.db(MONGODB_DATABASE);
+export default connectDB;

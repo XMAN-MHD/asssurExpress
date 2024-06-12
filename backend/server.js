@@ -1,31 +1,41 @@
-// import packages
-import express from 'express';
-import dotenv from 'dotenv/config'; // load the environment variables
-import { db } from './libs/dbConnect.js';
-import userRouter from './routes/user.route.js'
-import { errorHandler } from './libs/middleware.js';
+  import express from 'express';
+  import dotenv from 'dotenv/config';
+  import connectDB from './libs/dbConnect.js';
+  import userRouter from './routes/user.route.js';
+  import { errorHandler } from './libs/middleware.js';
+  import cookieParser from 'cookie-parser';
+  import cors from 'cors'; // Import the cors middleware
 
-// create a server
-const app = express();
+  // Connect to the database
+  connectDB();
 
-// access the port 
-const PORT = process.env.PORT || 5000; 
+  // Star our express server
+  const app = express();
 
-// middlewares
-app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+  // Port of the server
+  const PORT = process.env.PORT || 5000;
 
-// user router
-app.use('/api/v1/users', userRouter);
+  // Allow server to access data sent inside req.body through a form
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
+  // Allow the communication between the frontend and backend 
+  app.use(cors({
+    origin: process.env.CLIENT_URL, // Allow requests from the specified origin
+    credentials: true // Enable credentials support
+  }));
 
-// not found route 
-app.use('*', (req, res) => {
-    res.status(404).json({message: "not found"});
-})
+  // Enable cookie parser middleware
+  app.use(cookieParser());
 
-// error handler middleware always the last route
-app.use(errorHandler);
+  app.use('/api/v1/users', userRouter);
 
-// server listen 
-app.listen(PORT, ()=>{ console.log(`server listen on port ${PORT}!`) });
+  app.use('*', (req, res) => {
+    res.status(404).json({ message: "not found" });
+  });
+
+  app.use(errorHandler);
+
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}!`);
+  });

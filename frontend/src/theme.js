@@ -34,7 +34,7 @@ const components = {
         boxShadow: 'none',
       },
       _active: {
-        bg: 'primary.700',
+        bg: 'primary.500',
       },
     },
   },
