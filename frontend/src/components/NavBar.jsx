@@ -1,7 +1,8 @@
 import React from 'react';
-import { NavLink as RouterNavLink, Link as RouterLink, useNavigate } from 'react-router-dom';
+import { NavLink as RouterNavLink, Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
+import { toggleMenu } from '../features/dashboard';
 import {
   Box,
   Flex,
@@ -24,30 +25,65 @@ import logo from '../assets/images/logo/protection.png';
 const NavBar = () => {
   // Chakra UI hook to handle menu open/close state
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // Use react router hooks
   const dispatch = useDispatch();
-  // Access user information from Redux state
+  const location = useLocation();
+  
+
+  // Get some slices from the store
   const { user } = useSelector((state) => state.auth);
+  const { handleMenu } = useSelector((state) => state.dashboard);
+
+
   // set up useNavigate to redirect user
   const navigate = useNavigate()
+
   // Function to handle user logout
   const handleLogout = () => {
     dispatch(logout());
     navigate('/')
   };
 
+  // Handle dashboard menu
+  const handleDashboardMenu = (e) => {
+    dispatch(toggleMenu());
+  }
+
+  // Render Navbar view
   return (
     <Box bg="primary.500" zIndex={1} px={{ md: '59' }}>
       <Flex h={16} alignItems="center" justifyContent="space-between" px={4}>
         {/* Menu button for mobile view */}
-        <IconButton
-          size="lg"
-          icon={isOpen ? <FaTimes /> : <FaBars />}
-          aria-label="Open Menu"
-          display={{ md: 'none' }}
-          _hover={{ bg: 'transparent' }}
-          onClick={isOpen ? onClose : onOpen}
-          bg="transparent"
-        />
+        {
+          location.pathname !== '/dashboard' && (
+            <IconButton
+              size="lg"
+              icon={isOpen ? <FaTimes /> : <FaBars />}
+              aria-label="Open Menu"
+              display={{ md: 'none' }}
+              _hover={{ bg: 'transparent' }}
+              onClick={isOpen ? onClose : onOpen}
+              bg="transparent"
+            />
+          )
+        }
+
+        {/* Dashboard menu button for mobile view */}
+        {
+          location.pathname == '/dashboard' && (
+            <IconButton
+              size="lg"
+              icon={handleMenu ? <FaTimes /> : <FaBars />}
+              aria-label="Open Menu"
+              display={{ md: 'none' }}
+              _hover={{ bg: 'transparent' }}
+              onClick={handleDashboardMenu}
+              bg="transparent"
+            />
+          )
+        }
+
         <HStack spacing={20} alignItems="center" ml={[-10, 0]}> 
           {/* Logo and brand name */}
            <Flex gap={2} as={RouterLink} to="/">
