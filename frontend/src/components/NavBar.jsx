@@ -141,7 +141,7 @@ const NavBar = () => {
               >
                 <HStack>
                   <Text color="white" textTransform="capitalize" display={{ base: 'none', lg: 'flex' }}>
-                    bonjour, {user.prenom}
+                    {user.prenom.toUpperCase()}
                   </Text>
                   <Avatar size={['sm', 'md']} src={user.avatar} bg="white" color="black" />
                 </HStack>

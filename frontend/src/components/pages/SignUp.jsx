@@ -60,7 +60,7 @@ function SignUp() {
 
     if (isSuccess || user) {
       toast.success('Inscription réussie. Vous êtes maintenant connecté');
-      navigate('/'); // Redirect to home page on success
+      navigate('/dashboard'); // Redirect to home page on success
     }
 
     dispatch(reset()); // Reset auth state
@@ -155,8 +155,7 @@ function SignUp() {
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Retaper mot de passe"
                   {...register('password2', {
-                    required: 'Champ obligatoire.',
-                    validate: (value) => value === watch('password') || 'Les mots de passe ne correspondent pas',
+                    required: 'Champ obligatoire.'
                   })}
                   _focus={{ borderColor: 'primary.500', boxShadow: '0 0 0 1px var(--chakra-colors-primary-500)' }}
                   aria-label="Retaper mot de passe"

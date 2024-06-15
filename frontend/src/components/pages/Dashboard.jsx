@@ -70,7 +70,7 @@ const Dashboard = () => {
                 width="100%"
                 onClick={() => setActiveSection('purchase')}
               >
-                Acheter Assurance
+                Acheter 
               </Button>
               <Button
                 leftIcon={<FaSync />}
@@ -79,7 +79,7 @@ const Dashboard = () => {
                 width="100%"
                 onClick={() => setActiveSection('renew')}
               >
-                Renouveler Assurance
+                Renouveler 
               </Button>
             </VStack>
           </Box>
@@ -120,7 +120,7 @@ const Dashboard = () => {
                 width="100%"
                 onClick={() => setActiveSection('purchase')}
               >
-                Acheter Assurance
+                Acheter   
               </Button>
               <Button
                 leftIcon={<FaSync />}
@@ -129,7 +129,7 @@ const Dashboard = () => {
                 width="100%"
                 onClick={() => setActiveSection('renew')}
               >
-                Renouveler Assurance
+                Renouveler 
               </Button>
             </VStack>
           </Box>
