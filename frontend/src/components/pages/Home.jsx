@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
-import Hero from '../home/Hero'; // importing Hero component
-import Services from '../home/Services'; // importing Services component
-import HowItWorks from '../home/HowItWorks'; // importing HowItWorks component
-import NeedHelp from '../home/NeedHelp'; // importing NeedHelp component
+import Hero from '../HomeHero'; // importing Hero component
+import Services from '../HomeServices'; // importing Services component
+import HowItWorks from '../HomeHowItWorks'; // importing HowItWorks component
+import NeedHelp from '../dashboard/HomeNeedHelp'; // importing NeedHelp component
 import Footer from '../Footer'; // importing Footer component
 import ErrorBoundary from '../ErrorBoundary';
 

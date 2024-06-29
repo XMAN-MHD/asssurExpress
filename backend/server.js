@@ -2,6 +2,7 @@
   import dotenv from 'dotenv/config';
   import connectDB from './libs/dbConnect.js';
   import userRouter from './routes/user.route.js';
+  import insuranceRoutes from './routes/insurance.route.js';
   import { errorHandler } from './libs/middleware.js';
   import cookieParser from 'cookie-parser';
   import cors from 'cors'; // Import the cors middleware
@@ -28,14 +29,19 @@
   // Enable cookie parser middleware
   app.use(cookieParser());
 
+  // Routes
   app.use('/api/v1/users', userRouter);
+  app.use('/api/v1/insurances', insuranceRoutes);
 
+  // Not found route
   app.use('*', (req, res) => {
     res.status(404).json({ message: "not found" });
   });
 
+  // Error handler middleware
   app.use(errorHandler);
 
+  // Server is listening
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}!`);
   });

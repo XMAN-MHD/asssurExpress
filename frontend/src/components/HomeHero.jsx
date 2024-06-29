@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import heroImage from '../../assets/images/hero-image.svg';
+import heroImage from '../assets/images/hero-image.svg';
 
 const Hero = () => {
   return (

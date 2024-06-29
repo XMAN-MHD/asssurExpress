@@ -65,7 +65,8 @@ const NavBar = () => {
               _hover={{ bg: 'transparent' }}
               onClick={isOpen ? onClose : onOpen}
               bg="transparent"
-            />
+              marginRight={"20px"}
+            />  
           )
         }
 
@@ -84,16 +85,24 @@ const NavBar = () => {
           )
         }
 
+        {/* Logo and brand name */}
         <HStack spacing={20} alignItems="center" ml={[-10, 0]}> 
-          {/* Logo and brand name */}
            <Flex gap={2} as={RouterLink} to="/">
             <Image src={logo} alt="logo" boxSize={8} />
             <Text fontWeight="bold" mb={1} color="white" fontSize={20}>
               Assur'Express
             </Text>
           </Flex> 
+        </HStack> 
+        
+        {/* Navigation links and Profile */}
+        <Flex 
+          alignItems="center"
+          justifyContent={"flex-end"}
+          flexBasis={"80%"}
+        >
           {/* Navigation links for desktop view */}
-          <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
+          <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }} marginRight={"20px"}>
             <Link
               as={RouterNavLink}
               to="/"
@@ -124,10 +133,9 @@ const NavBar = () => {
             >
               Qui sommes-nous
             </Link>
-          </HStack> 
-        </HStack> 
-        {/* User profile */}
-        <Flex alignItems="center">
+          </HStack>   
+
+          {/* User profile */}
           {user ? (
             // User menu when logged in
             <Menu>
@@ -140,9 +148,9 @@ const NavBar = () => {
                 _active={{ bg: 'transparent' }}
               >
                 <HStack>
-                  <Text color="white" textTransform="capitalize" display={{ base: 'none', lg: 'flex' }}>
+                  {/* <Text color="white" textTransform="capitalize" display={{ base: 'none', lg: 'flex' }}>
                     {user.prenom.toUpperCase()}
-                  </Text>
+                  </Text> */}
                   <Avatar size={['sm', 'md']} src={user.avatar} bg="white" color="black" />
                 </HStack>
               </MenuButton>
