@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import Hero from '../HomeHero'; // importing Hero component
 import Services from '../HomeServices'; // importing Services component
 import HowItWorks from '../HomeHowItWorks'; // importing HowItWorks component
-import NeedHelp from '../dashboard/HomeNeedHelp'; // importing NeedHelp component
+import NeedHelp from '../HomeNeedHelp'; // importing NeedHelp component
 import Footer from '../Footer'; // importing Footer component
 import ErrorBoundary from '../ErrorBoundary';
 

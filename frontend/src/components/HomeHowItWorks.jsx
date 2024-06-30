@@ -7,10 +7,23 @@ const HowItWorks = () => {
   return (
     <Box as="section" pt={20} pb={5} px={{ base: '10', md: '59' }}>
       {/* Section heading */}
-      <Heading fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={20}>
+      <Heading fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={10} textAlign={'center'}>
         Comment ça marche?
       </Heading>
-
+      {/** Text */}
+      <Text 
+            mt={1}
+            fontSize="lg"
+            w={{lg: "60%"}}
+            m={'auto'}
+            mb={10}
+      >
+            Découvrez notre processus simple et sécurisé pour acheter votre assurance en ligne. 
+            Obtenez un devis instantané en fournissant vos informations, choisissez les options 
+            de couverture qui vous conviennent, effectuez un paiement sécurisé et recevez votre police d'assurance. 
+            Simplifiez votre expérience d'achat d'assurance avec nous.
+            {/* <Image display={{ base: 'none', lg: 'inline' }} boxSize={5} src={rightArrow} /> */}
+      </Text>  
       {/* Container for the steps */}
       <Flex direction={{ base: 'column', md: 'row' }} justifyContent="space-between" flexWrap="wrap" gap={10}>
         <StepBox
@@ -36,7 +49,7 @@ const HowItWorks = () => {
       </Flex>
 
       {/* Call to action button */}
-      <Button 
+      {/* <Button 
         as={RouterLink} 
         mt={20}
         size="lg" 
@@ -44,7 +57,7 @@ const HowItWorks = () => {
         w={{ base: "120px", md: "150px", lg: "160px" }}
       >
         Commencer
-      </Button>
+      </Button> */}
     </Box>
   );
 };

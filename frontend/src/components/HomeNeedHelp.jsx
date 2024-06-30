@@ -6,9 +6,22 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 const NeedHelp = () => {
   return (
     <Box as="section" pt={20} pb={5} px={{ base: '10', md: '59' }}>
-      <Heading fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={20}>
+      <Heading fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={10} textAlign={'center'}>
         Besoin d'aide?
       </Heading>
+      {/** Text */}
+      <Text 
+        mt={1}
+        fontSize="lg"
+        w={{lg: "60%"}}
+        m={'auto'}
+        mb={10}
+      >
+        Besoin de plus d'informations sur nos services d'assurance ou prêt à démarrer votre couverture ? 
+        N'hésitez pas à nous contacter. Notre équipe est à votre disposition pour répondre à toutes vos 
+        questions.
+      </Text>  
+      {/** Contacts */}
       <Flex direction={{ base: 'column', lg: 'row' }} gap={10} wrap="wrap">
         <ContactBox
           icon={<Icon as={FaPhone} color="white" boxSize={6} />}

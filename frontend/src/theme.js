@@ -3,7 +3,6 @@ import { extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
 
 const colors = {
   primary: {
-    main: '#25D366',
     50: '#e3f2ec',
     100: '#c5e4cf',
     200: '#a2d4b0',

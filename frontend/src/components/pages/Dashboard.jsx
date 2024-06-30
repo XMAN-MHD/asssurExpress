@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { NavLink as RouterNavLink } from 'react-router-dom';
+import { NavLink as RouterNavLink, useNavigate } from 'react-router-dom';
 import { Box, Flex, VStack, Text, Button, Divider } from '@chakra-ui/react';
-import { FaHome, FaUser, FaCar, FaSync, FaHistory } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { FaHome, FaUser, FaCar, FaSync, FaHistory, FaSignOutAlt } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../features/auth/authSlice';
 import Home from '../DashboardHome';
 import Profile from '../DashboardProfile';
 import Purchase from '../DashboardPurchase';
@@ -31,8 +32,18 @@ const Dashboard = () => {
 
   const { handleMenu } = useSelector(state => state.dashboard);
 
+  // Use react router hooks
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  // Function to handle user logout
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/')
+  };
+
   return (
-    <Flex >
+    <Flex height={"100vh"}>
 
       {/** Desktop sidebar menu */}
       <Box
@@ -173,14 +184,23 @@ const Dashboard = () => {
               >
                 Historique
               </Button>
+              <Button
+                leftIcon={<FaSignOutAlt />}
+                variant="ghost"
+                justifyContent="flex-start"
+                width="100%"
+                onClick={handleLogout}
+              >
+                Déconnexion
+              </Button>
             </VStack>
           </Box>
         )
       }
 
       {/** Main content  */}
-      <Box flex="1" bg="primary.100" p="6">
-        <Box bg="white" p="6" rounded="md" shadow="md">
+      <Box flex="1" bg="primary.100" p={{base: 2, md: 6}}>
+        <Box>
           {/* <Text fontSize="2xl" fontWeight="bold" mb="4">Bienvenue sur votre tableau de bord</Text>
           <Divider mb="4" /> */}
           {renderContent()}

@@ -29,15 +29,11 @@ const NavBar = () => {
   // Use react router hooks
   const dispatch = useDispatch();
   const location = useLocation();
-  
+  const navigate = useNavigate()
 
   // Get some slices from the store
   const { user } = useSelector((state) => state.auth);
   const { handleMenu } = useSelector((state) => state.dashboard);
-
-
-  // set up useNavigate to redirect user
-  const navigate = useNavigate()
 
   // Function to handle user logout
   const handleLogout = () => {
@@ -54,6 +50,16 @@ const NavBar = () => {
   return (
     <Box bg="primary.500" zIndex={1} px={{ md: '59' }}>
       <Flex h={16} alignItems="center" justifyContent="space-between" px={4}>
+        {/* Logo and brand name */}
+        <HStack spacing={20} alignItems="center"> 
+           <Flex gap={2} as={RouterLink} to="/">
+            <Image src={logo} alt="logo" boxSize={8} />
+            <Text fontWeight="bold" mb={1} color="white" fontSize={20}>
+              Assur'Express
+            </Text>
+          </Flex> 
+        </HStack> 
+        
         {/* Menu button for mobile view */}
         {
           location.pathname !== '/dashboard' && (
@@ -65,8 +71,7 @@ const NavBar = () => {
               _hover={{ bg: 'transparent' }}
               onClick={isOpen ? onClose : onOpen}
               bg="transparent"
-              marginRight={"20px"}
-            />  
+            />
           )
         }
 
@@ -85,21 +90,12 @@ const NavBar = () => {
           )
         }
 
-        {/* Logo and brand name */}
-        <HStack spacing={20} alignItems="center" ml={[-10, 0]}> 
-           <Flex gap={2} as={RouterLink} to="/">
-            <Image src={logo} alt="logo" boxSize={8} />
-            <Text fontWeight="bold" mb={1} color="white" fontSize={20}>
-              Assur'Express
-            </Text>
-          </Flex> 
-        </HStack> 
-        
         {/* Navigation links and Profile */}
         <Flex 
           alignItems="center"
           justifyContent={"flex-end"}
           flexBasis={"80%"}
+          display={{base: 'none', md: 'flex'}}
         >
           {/* Navigation links for desktop view */}
           <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }} marginRight={"20px"}>
@@ -131,7 +127,7 @@ const NavBar = () => {
               _hover={{ textDecoration: 'none' }}
               _activeLink={{ color: 'primary.800', bg: 'white', p: 1, borderRadius: 5 }}
             >
-              Qui sommes-nous
+              Qui Sommes-Nous
             </Link>
           </HStack>   
 
@@ -161,14 +157,14 @@ const NavBar = () => {
                   _hover={{ bg: 'primary.100' }}
                   _focus={{ bg: 'primary.100' }}
                 >
-                  Mon compte
+                  Mon Compte
                 </MenuItem>
                 <MenuItem
                   onClick={handleLogout}
                   _hover={{ bg: 'primary.100' }}
                   _focus={{ bg: 'primary.100' }}
                 >
-                  Se déconnecter
+                  Se Déconnecter
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -184,7 +180,7 @@ const NavBar = () => {
               size={'xs'}
               fontSize={[12, 14]}
             >
-              connexion
+              Connexion
             </Button>
           )}
         </Flex>
@@ -215,24 +211,66 @@ const NavBar = () => {
             </Link>
             <Link
               as={RouterNavLink}
-              to="/about"
-              _hover={{ bg: 'primary.100' }}
-              px={2}
-              onClick={onClose}
-              color={'primary.800'}
-            >
-              Qui sommes-nous
-            </Link>
-            <Link
-              as={RouterNavLink}
               to="/partner"
               _hover={{ bg: 'primary.100' }}
               px={2}
               onClick={onClose}
               color={'primary.800'}
             >
-              Devenir partenaire
+              Devenir Partenaire
             </Link>
+            <Link
+              as={RouterNavLink}
+              to="/about"
+              _hover={{ bg: 'primary.100' }}
+              px={2}
+              onClick={onClose}
+              color={'primary.800'}
+            >
+              Qui Sommes-Nous
+            </Link>
+            {
+              !user && (
+                <Link
+                  as={RouterNavLink}
+                  to="/signin"
+                  _hover={{ bg: 'primary.100' }}
+                  px={2}
+                  color={'primary.800'}
+                  onClick={onClose}
+                > 
+                  Se Connecter
+                </Link>
+              )
+            }
+            {
+              user && (
+                <Link
+                  as={RouterNavLink}
+                  to="/dashboard"
+                  _hover={{ bg: 'primary.100' }}
+                  px={2}
+                  color={'primary.800'}
+                  onClick={onClose}
+                > 
+                  Mon Compte
+                </Link>
+              )
+            }
+            {
+              user && (
+                <Link
+                  as={RouterNavLink}
+                  to="/"
+                  _hover={{ bg: 'primary.100' }}
+                  px={2}
+                  color={'primary.800'}
+                  onClick={handleLogout}
+                > 
+                  Se Déconnecter
+                </Link>
+              )
+            }
           </Flex>
         </Box>
       )}

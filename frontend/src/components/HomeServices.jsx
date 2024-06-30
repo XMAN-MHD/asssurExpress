@@ -29,13 +29,17 @@ const Services = () => {
           direction="column"
           gap={10}
         >
-          <Heading fontSize={{ base: '2xl', md: "5xl" }} fontWeight="bold" as="h1">
+          <Heading fontSize={{ base: '2xl', md: "5xl" }} fontWeight="bold" as="h1" textAlign={'center'}>
             Pourquoi nous choisir?
           </Heading>
-          <Text fontSize="lg">
+          <Text 
+            fontSize="lg"
+            w={{lg: "60%"}}
+            m={'auto'}
+          >
             Acheter une assurance voiture en ligne présente plusieurs avantages,
             notamment en termes de commodité, de coûts et de personnalisation. 
-            <br />Voici quelques raisons pour lesquelles il peut être bénéfique d'acheter 
+            Voici quelques raisons pour lesquelles il peut être bénéfique d'acheter 
             une assurance voiture en ligne : 
             {/* <Image display={{ base: 'none', lg: 'inline' }} boxSize={5} src={rightArrow} /> */}
           </Text>
@@ -48,8 +52,8 @@ const Services = () => {
           justifyContent="space-between"
           as="section"
           flexBasis="50%"
-          px={59}
-          py={20}
+          px={{base:10, md: 59}}
+          pt={10}
         >   
           {/* First row of feature/benefit boxes */}
           <Flex 
@@ -93,7 +97,7 @@ const Services = () => {
             />
           </Flex>
         </Flex>
-        <Flex
+        {/* <Flex
           px={{ base: '10', md: '59' }}
           flexBasis="50%"
           direction="column"
@@ -106,7 +110,7 @@ const Services = () => {
           >
               Voir Plus
           </Button>
-          </Flex>
+        </Flex> */}
       </Flex>  
     </section>
   );

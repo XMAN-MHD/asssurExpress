@@ -60,8 +60,10 @@ const Hero = () => {
           fontSize={{ base: 'lg', md: 'xl' }}
           mb={6}
           color="white"
+          textAlign={{base: 'justify', lg: 'start'}}
+          w={{base: "100%", lg: "50%"}}
         >
-          Votre partenaire de confiance pour tous vos besoins <br />en assurance. Nous fournissons des services rapides <br />et fiables pour assurer votre tranquillité d'esprit.
+          Votre partenaire de confiance pour tous vos besoins en assurance. Nous fournissons des services rapides et fiables pour assurer votre tranquillité d'esprit.
         </Text>
         {/* Button to navigate to the signup page */}
         <Button
