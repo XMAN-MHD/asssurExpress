@@ -12,17 +12,16 @@ const HowItWorks = () => {
       </Heading>
       {/** Text */}
       <Text 
-            mt={1}
-            fontSize="lg"
-            w={{lg: "60%"}}
-            m={'auto'}
-            mb={10}
+        mt={1}
+        fontSize="lg"
+        w={{lg: "60%"}}
+        m={'auto'}
+        mb={10}
       >
-            Découvrez notre processus simple et sécurisé pour acheter votre assurance en ligne. 
-            Obtenez un devis instantané en fournissant vos informations, choisissez les options 
-            de couverture qui vous conviennent, effectuez un paiement sécurisé et recevez votre police d'assurance. 
-            Simplifiez votre expérience d'achat d'assurance avec nous.
-            {/* <Image display={{ base: 'none', lg: 'inline' }} boxSize={5} src={rightArrow} /> */}
+        Découvrez notre processus simple et sécurisé pour acheter votre assurance en ligne. 
+        Obtenez un devis instantané en fournissant vos informations, choisissez les options 
+        de couverture qui vous conviennent, effectuez un paiement sécurisé et recevez votre police d'assurance. 
+        Simplifiez votre expérience d'achat d'assurance avec nous.
       </Text>  
       {/* Container for the steps */}
       <Flex direction={{ base: 'column', md: 'row' }} justifyContent="space-between" flexWrap="wrap" gap={10}>

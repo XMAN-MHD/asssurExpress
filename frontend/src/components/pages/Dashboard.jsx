@@ -43,7 +43,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Flex height={"100vh"}>
+    <Flex minH={"800px"}>
 
       {/** Desktop sidebar menu */}
       <Box

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink as RouterNavLink, Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
-import { toggleMenu } from '../features/dashboard';
+import { toggleMenu } from '../features/dash/dashSlice';
 import {
   Box,
   Flex,

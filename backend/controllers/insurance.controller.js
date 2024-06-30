@@ -84,7 +84,7 @@ export const getUserInsurances = async (req, res, next) => {
     const userId = req.user.id; // assuming the user ID is added to the request by middleware
 
     const insurances = await Insurance.find({ user: userId });
-    res.status(200).json({ insurances });
+    res.status(200).json(insurances);
   } catch (error) {
     next({ status: 500, message: 'Erreur lors de la récupération des assurances.', error });
   }

@@ -2,25 +2,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService';
 
-// Function to safely parse JSON
-const safeJSONParse = (item) => {
-    try {
-        return JSON.parse(item);
-    } catch (error) {
-        return null;
-    }
-};
-
-const localuser = safeJSONParse(localStorage.getItem('user'));
-
-const initialState = {
-    user: localuser ? localuser : null,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: ''
-};
-
 export const register = createAsyncThunk(
     'auth/register',
     async (user, thunkAPI) => {
@@ -54,6 +35,26 @@ export const logout = createAsyncThunk(
     async () => await authService.logout()
 );
 
+// Function to safely parse JSON
+const safeJSONParse = (item) => {
+    try {
+        return JSON.parse(item);
+    } catch (error) {
+        return null;
+    }
+};
+
+const localuser = safeJSONParse(localStorage.getItem('user'));
+
+const initialState = {
+    user: localuser ? localuser : null,
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: ''
+};
+
+// Slice
 export const authSlice = createSlice({
     name: 'auth',
     initialState,

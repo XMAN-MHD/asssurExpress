@@ -1,23 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Heading, Text, Button, VStack, Divider, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Helmet } from 'react-helmet';
+import { getPolicies} from '../features/dash/dashSlice';
 
 const DashboardHome = () => {
+  const dispatch = useDispatch();
   // Mock data for the user's policies and activities
-  const userName = 'John Doe';
-  const policies = [
-    
-  ]; // Empty policies array for demonstration
+  const { user } = useSelector((state) => state.auth);
+  const {prenom, nom, _id} = user;
+  const userName = `${prenom} ${nom} `;
 
+  useEffect(() => {
+    dispatch(getPolicies(user)); 
+ }, [dispatch]);
+
+  // Selecting data from Redux state
+  const { policyData, isLoading, isError, message } = useSelector(state => state.dashboard.policies);
+  // Array of user's insurance policies
+  const policies = policyData;  
+  const vehicle0 = policies[0].vehicle
+  console.log(vehicle0.brand);
+
+  // Determine colors based on light or dark mode
   const bgColor = useColorModeValue('white', 'gray.700');
   const primaryColor = useColorModeValue('primary.500', 'primary.200');
+  
+  // Function to determine background color for notifications based on type
   const notificationBg = (type) => type === 'warning' ? 'yellow.100' : type === 'success' ? 'green.100' : 'red.100';
 
+  // Function to check if a policy is expired
   const isPolicyExpired = (expirationDate) => {
     const today = new Date();
     const expiration = new Date(expirationDate);
     return expiration < today;
   };
 
+  // Function to check if a policy is expiring soon (within 30 days)
   const isPolicyExpiringSoon = (expirationDate) => {
     const today = new Date();
     const expiration = new Date(expirationDate);
@@ -26,13 +45,15 @@ const DashboardHome = () => {
     return daysDiff <= 30 && daysDiff > 0;
   };
 
+  // Array to hold notification messages based on policy status
   const notifications = [];
 
+  // Loop through each policy and create a corresponding notification
   policies.forEach(policy => {
     if (isPolicyExpired(policy.expiration)) {
       notifications.push({
         id: notifications.length + 1,
-        message: `Votre assurance ${policy.brand} ${policy.model} est expirée!`,
+        message: `Votre assurance ${policy.vehicle.brand} ${policy.vehicle.model} est expirée!`,
         type: 'danger',
       });
     } else if (isPolicyExpiringSoon(policy.expiration)) {
@@ -51,45 +72,60 @@ const DashboardHome = () => {
   });
 
   return (
-    <Box p={6} bg={bgColor} rounded="md" shadow="md">
-      <Heading as="h1" size="xl" mb={4} color={primaryColor}>Bienvenue, {userName}!</Heading>
-      <Divider mb={10} />
+    <>
+      {/* Use react-helmet to set the document head properties */}
+      <Helmet>
+        <title>Tableau de Bord - Bienvenue, {userName}!</title>
+        <meta name="description" content={`Bienvenue sur votre tableau de bord, ${userName}. Gérez vos polices d'assurance et restez informé de vos notifications.`} />
+      </Helmet>
+      <Box p={6} bg={bgColor} rounded="md" shadow="md">
+        {/* Welcome heading */}
+        <Heading as="h1" size="xl" mb={4} color={primaryColor}>Bienvenue, {userName}!</Heading>
+        <Divider mb={10} />
 
-      <Heading as="h2" size="lg" mb={4}>Vos Polices d'Assurance</Heading>
-      {policies.length === 0 ? (
-        <Text mb={4}>Vous n'avez aucune police d'assurance pour le moment.</Text>
-      ) : (
-        <VStack align="start" spacing={4} mb={4}>
-          {policies.map(policy => (
-            <Box key={policy.id} p={4} borderWidth="1px" borderRadius="md" width="100%" bg="beige">
-              <Text fontSize="lg" fontWeight="bold">{policy.brand} {policy.model}</Text>
-              <Text>Date de délivrance: {policy.deliverance}</Text>
-              <Text>Date d'expiration: {policy.expiration}</Text>
-            </Box>
-          ))}
-        </VStack>
-      )}
+        {/* Section for displaying user's insurance policies */}
+        <Heading as="h2" size="lg" mb={4}>Vos Polices d'Assurance</Heading>
+        {policies.length === 0 ? (
+          <Text mb={4}>Vous n'avez aucune police d'assurance pour le moment.</Text>
+        ) : (
+          <Box maxH="300px" overflowY="auto" mb={4}>
+            <VStack align="start" spacing={4}>
+              {policies.map(policy => (
+                <Box key={policy.id} p={4} borderWidth="1px" borderRadius="md" width="100%" bg="beige">
+                  <Text fontSize="lg" fontWeight="bold">{policy.brand} {policy.model}</Text>
+                  <Text>Date de délivrance: {policy.deliverance}</Text>
+                  <Text>Date d'expiration: {policy.expiration}</Text>
+                </Box>
+              ))}
+            </VStack>
+          </Box>
+        )}
 
-      <Heading as="h2" size="lg" mb={4}>Notifications</Heading>
-      {notifications.length === 0 ? (
-        <Text mb={4}>Aucune notification pour le moment.</Text>
-      ) : (
-        <VStack align="start" spacing={4} mb={4}>
-          {notifications.map(notification => (
-            <Box key={notification.id} p={4} borderWidth="1px" borderRadius="md" width="100%" bg={notificationBg(notification.type)}>
-              <Text>{notification.message}</Text>
-            </Box>
-          ))}
-        </VStack>
-      )}
+        {/* Section for displaying notifications */}
+        <Heading as="h2" size="lg" mb={4}>Notifications</Heading>
+        {notifications.length === 0 ? (
+          <Text mb={4}>Aucune notification pour le moment.</Text>
+        ) : (
+          <Box maxH="300px" overflowY="auto" mb={4}>
+            <VStack align="start" spacing={4}>
+              {notifications.map(notification => (
+                <Box key={notification.id} p={4} borderWidth="1px" borderRadius="md" width="100%" bg={notificationBg(notification.type)}>
+                  <Text>{notification.message}</Text>
+                </Box>
+              ))}
+            </VStack>
+          </Box>
+        )}
 
-      <Heading as="h2" size="lg" mb={4}>Actions Rapides</Heading>
-      <Flex flexDirection={{ base: 'column', lg: 'row' }}>
-        <Button colorScheme="blue" mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Renouveler une Police</Button>
-        <Button colorScheme="green" mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Acheter une Nouvelle Assurance</Button>
-        <Button colorScheme="red">Contacter le Support</Button>
-      </Flex>
-    </Box>
+        {/* Section for quick action buttons */}
+        <Heading as="h2" size="lg" mb={4}>Actions Rapides</Heading>
+        <Flex flexDirection={{ base: 'column', lg: 'row' }}>
+          <Button colorScheme="blue" mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Renouveler une Police</Button>
+          <Button colorScheme="green" mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Acheter une Nouvelle Assurance</Button>
+          <Button colorScheme="red">Contacter le Support</Button>
+        </Flex>
+      </Box>
+    </>
   );
 };
 

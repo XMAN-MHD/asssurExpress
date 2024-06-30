@@ -41,7 +41,6 @@ const Services = () => {
             notamment en termes de commodité, de coûts et de personnalisation. 
             Voici quelques raisons pour lesquelles il peut être bénéfique d'acheter 
             une assurance voiture en ligne : 
-            {/* <Image display={{ base: 'none', lg: 'inline' }} boxSize={5} src={rightArrow} /> */}
           </Text>
         </Flex>
 
