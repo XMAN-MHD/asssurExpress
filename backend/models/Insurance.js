@@ -35,6 +35,15 @@ const insuranceSchema = new Schema({
     max: [60, 'La durée de l\'assurance doit être au maximum 60 mois.'],
     required: [true, 'La durée de l\'assurance est obligatoire.']
   },
+  deliverance: {
+    type: Date,
+    default: Date.now,
+    required: [true, 'La date de délivrance est obligatoire.']
+  },
+  expiration: {
+    type: Date,
+    required: [true, 'La date d\'expiration est obligatoire.']
+  },
   vehicle: {
     registrationNumber: {
       type: String,

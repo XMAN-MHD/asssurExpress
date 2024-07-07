@@ -21,7 +21,7 @@ export const getPolicies = createAsyncThunk(
 const initialState = {
     handleMenu: false,
     policies: {
-        policyData: [],
+        data: [],
         isLoading: false,
         isSuccess: false,
         isError: false,
@@ -48,13 +48,13 @@ export const dashboardSlice = createSlice({
             .addCase(getPolicies.fulfilled, (state, action) => {
                 state.policies.isLoading = false;
                 state.policies.isSuccess = true;
-                state.policies.policyData = action.payload;
+                state.policies.data = action.payload;
             })
             .addCase(getPolicies.rejected, (state, action) => {
                 state.policies.isLoading = false;
                 state.policies.isError = true;
                 state.policies.message = action.payload;
-                state.policies.policyData = [];
+                state.policies.data = [];
             });
     },
 });

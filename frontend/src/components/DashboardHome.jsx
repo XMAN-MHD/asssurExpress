@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import {format} from 'date-fns';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Heading, Text, Button, VStack, Divider, Flex, useColorModeValue } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
@@ -9,18 +10,15 @@ const DashboardHome = () => {
   // Mock data for the user's policies and activities
   const { user } = useSelector((state) => state.auth);
   const {prenom, nom, _id} = user;
-  const userName = `${prenom} ${nom} `;
+  const userName = `${prenom} ${nom}`;
 
   useEffect(() => {
     dispatch(getPolicies(user)); 
  }, [dispatch]);
 
   // Selecting data from Redux state
-  const { policyData, isLoading, isError, message } = useSelector(state => state.dashboard.policies);
-  // Array of user's insurance policies
-  const policies = policyData;  
-  const vehicle0 = policies[0].vehicle
-  console.log(vehicle0.brand);
+  const { data: policies, isLoading, isError, message } = useSelector(state => state.dashboard.policies);
+  // Array of user's insurance policies 
 
   // Determine colors based on light or dark mode
   const bgColor = useColorModeValue('white', 'gray.700');
@@ -46,30 +44,40 @@ const DashboardHome = () => {
   };
 
   // Array to hold notification messages based on policy status
-  const notifications = [];
-
+  const notifications = []; 
+  policies.forEach(policy => { console.log(policy.vehicle.brand) })
   // Loop through each policy and create a corresponding notification
-  policies.forEach(policy => {
-    if (isPolicyExpired(policy.expiration)) {
-      notifications.push({
-        id: notifications.length + 1,
-        message: `Votre assurance ${policy.vehicle.brand} ${policy.vehicle.model} est expirée!`,
-        type: 'danger',
-      });
-    } else if (isPolicyExpiringSoon(policy.expiration)) {
-      notifications.push({
-        id: notifications.length + 1,
-        message: `Votre assurance ${policy.brand} ${policy.model} expire bientôt!`,
-        type: 'warning',
-      });
-    } else {
-      notifications.push({
-        id: notifications.length + 1,
-        message: `Votre assurance ${policy.brand} ${policy.model} est active.`,
-        type: 'success',
-      });
-    }
-  });
+  if (!isLoading && !isError && policies.length > 0)
+  {
+    policies.forEach(policy => {
+      const brand = policy.vehicle.brand; 
+      const model = policy.vehicle.model;
+      if (isPolicyExpired(policy.expiration)) 
+      {
+        notifications.push({
+          id: notifications.length + 1,
+          message: `Votre assurance ${brand} ${model} est expirée!`,
+          type: 'danger',
+        });
+      } 
+      else if (isPolicyExpiringSoon(policy.expiration)) 
+      {
+        notifications.push({
+          id: notifications.length + 1,
+          message: `Votre assurance ${brand} ${model} expire bientôt!`,
+          type: 'warning',
+        });
+      }
+      else 
+      {
+        notifications.push({
+          id: notifications.length + 1,
+          message: `Votre assurance ${brand} ${model} est active.`,
+          type: 'success',
+        });
+      }
+    });
+  }
 
   return (
     <>
@@ -92,9 +100,9 @@ const DashboardHome = () => {
             <VStack align="start" spacing={4}>
               {policies.map(policy => (
                 <Box key={policy.id} p={4} borderWidth="1px" borderRadius="md" width="100%" bg="beige">
-                  <Text fontSize="lg" fontWeight="bold">{policy.brand} {policy.model}</Text>
-                  <Text>Date de délivrance: {policy.deliverance}</Text>
-                  <Text>Date d'expiration: {policy.expiration}</Text>
+                  <Text fontSize="lg" fontWeight="bold">{policy.vehicle.brand} {policy.vehicle.model}</Text>
+                  <Text>Date de délivrance: {format(new Date(policy.deliverance), 'dd/MM/yyyy - HH:mm:ss')}</Text>
+                  <Text>Date d'expiration: {format(policy.expiration, 'dd/MM/yyyy')}</Text> 
                 </Box>
               ))}
             </VStack>

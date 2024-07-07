@@ -39,7 +39,6 @@ export const createInsurance = async (req, res) => {
     try {
         const { type, company, vehicleCategory, vehiclePower, insuranceDuration, vehicle, owner, photos } = req.body;
         const userId = req.user.id; // Assuming you have user info in req.user after verifying the token
-
         // Calculate the insurance price
         const baseRate = 100;
         const typeMultiplier = type === 'Assurance Digitale' ? 1.1 : 1.0;
@@ -53,9 +52,11 @@ export const createInsurance = async (req, res) => {
         }[vehicleCategory] || 1.0;
         const powerMultiplier = vehiclePower / 100;
         const durationMultiplier = insuranceDuration / 12;
-
         const price = baseRate * typeMultiplier * companyMultiplier * categoryMultiplier * powerMultiplier * durationMultiplier;
-
+        // calculate the insurance expiration
+        const deliveranceDate = new Date();
+        const expiration = new Date(deliveranceDate.setMonth(deliveranceDate.getMonth() + insuranceDuration));
+        // Create the new insurance data
         const newInsurance = new Insurance({
             user: userId,
             type,
@@ -63,12 +64,14 @@ export const createInsurance = async (req, res) => {
             vehicleCategory,
             vehiclePower,
             insuranceDuration,
+            deliverance: new Date(),
+            expiration,
             vehicle,
             owner,
             photos,
             price
         });
-
+        // Save the new insurance data
         const savedInsurance = await newInsurance.save();
         res.status(201).json(savedInsurance);
     } catch (error) {
@@ -76,7 +79,6 @@ export const createInsurance = async (req, res) => {
         res.status(500).json({ message: 'Server error. Please try again later.' });
     }
 };
-
 
 // Get all insurances for a user
 export const getUserInsurances = async (req, res, next) => {
@@ -117,18 +119,60 @@ export const updateInsurance = async (req, res, next) => {
     const insuranceId = req.params.id;
     const updateData = req.body;
 
+    // Check the data first
     if (!mongoose.Types.ObjectId.isValid(insuranceId)) {
       return res.status(400).json({ message: "Numéro d'assurance invalide." });
     }
 
-    const updatedInsurance = await Insurance.findByIdAndUpdate(insuranceId, updateData, { new: true });
+    // Find the existing insurance
+    const existedInsurance = await Insurance.findById(insuranceId);
+    if (!existedInsurance) {
+      return res.status(404).json({ message: 'Assurance introuvable.' });
+    }
 
+    // Handle deliverance and expiration date updates
+    if (updateData.insuranceDuration && updateData.deliverance) {
+      const deliveranceDate = new Date(updateData.deliverance);
+      const expiration = new Date(deliveranceDate);
+      expiration.setMonth(deliveranceDate.getMonth() + updateData.insuranceDuration);
+      updateData.expiration = expiration;
+    } else if (updateData.insuranceDuration) {
+      const deliveranceDate = new Date(existedInsurance.deliverance);
+      const expiration = new Date(deliveranceDate);
+      expiration.setMonth(deliveranceDate.getMonth() + updateData.insuranceDuration);
+      updateData.expiration = expiration;
+    }
+
+    // Handle the new insurance price 
+    if(updateData.vehicleCategory || updateData.vehiclePower || updateData.insuranceDuration)
+    {  
+      const type ='Assurance Digitale'; 
+      const baseRate = 100; // base rate for the insurance
+      const typeMultiplier = type === 'Assurance Digitale' ? 1.1 : 1.0;
+      const companyMultiplier = 1.0; // You can adjust this based on company
+      const categoryMultiplier = {
+        'Catégorie 1': 1.0,
+        'Catégorie 2': 1.2,
+        'Catégorie 3': 1.4,
+        'Catégorie 4': 1.6,
+        'Catégorie 5': 1.8,
+      }[updateData.vehicleCategory] || 1.0;
+      const powerMultiplier = updateData.vehiclePower / 100; // Adjust the formula as needed
+      const durationMultiplier = updateData.insuranceDuration / 12; // Assuming base rate is for 1 year
+      const price = baseRate * typeMultiplier * companyMultiplier * categoryMultiplier * powerMultiplier * durationMultiplier;
+      updateData.price = price;
+    }
+
+    // Perform the update
+    const updatedInsurance = await Insurance.findByIdAndUpdate(insuranceId, updateData, { new: true });
     if (!updatedInsurance) {
       return res.status(404).json({ message: 'Assurance introuvable.' });
     }
 
+    // Update successfully !
     res.status(200).json({ message: 'Assurance mise à jour avec succès.', insurance: updatedInsurance });
-  } catch (error) {
+  } 
+  catch (error) {
     next({ status: 500, message: "Erreur lors de la mise à jour de l'assurance.", error });
   }
 };
@@ -145,7 +189,7 @@ export const deleteInsurance = async (req, res, next) => {
     const deletedInsurance = await Insurance.findByIdAndDelete(insuranceId);
 
     if (!deletedInsurance) {
-      return res.status(404).json({ message: 'Assurance introuvable.' });
+      return res.status(404).json({ message: 'Assurance supprimée avec succès.' });
     }
 
     res.status(200).json({ message: 'Assurance supprimée avec succès.' });
