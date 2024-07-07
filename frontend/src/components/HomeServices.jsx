@@ -124,9 +124,9 @@ const FeatureBox = ({ icon, text }) => {
       flexWrap="wrap"
       textAlign="center" 
       bg="white"
-      boxShadow="lg"
+      boxShadow="0px 4px 6px #25D366"
       borderRadius="2xl"
-      _hover={{ boxShadow: "0px 4px 6px #25D366" }}
+      _hover={{ boxShadow: "lg" }}
       justifyContent="center"
       alignItems="center"
       direction="column"

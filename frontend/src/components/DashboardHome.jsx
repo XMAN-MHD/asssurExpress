@@ -93,16 +93,20 @@ const DashboardHome = () => {
 
         {/* Section for displaying user's insurance policies */}
         <Heading as="h2" size="lg" mb={4}>Vos Polices d'Assurance</Heading>
-        {policies.length === 0 ? (
+        {isLoading ? (
+          <Text mb={4}>Chargement des polices...</Text>
+        ) : isError ? (
+          <Text mb={4}>Une erreur s'est produite : {message}</Text>
+        ):policies.length === 0 ? (
           <Text mb={4}>Vous n'avez aucune police d'assurance pour le moment.</Text>
-        ) : (
+        ): (
           <Box maxH="300px" overflowY="auto" mb={4}>
             <VStack align="start" spacing={4}>
               {policies.map(policy => (
                 <Box key={policy.id} p={4} borderWidth="1px" borderRadius="md" width="100%" bg="beige">
                   <Text fontSize="lg" fontWeight="bold">{policy.vehicle.brand} {policy.vehicle.model}</Text>
-                  <Text>Date de délivrance: {format(new Date(policy.deliverance), 'dd/MM/yyyy - HH:mm:ss')}</Text>
-                  <Text>Date d'expiration: {format(policy.expiration, 'dd/MM/yyyy')}</Text> 
+                  <Text>Date de délivrance: Le {format(new Date(policy.deliverance), 'dd/MM/yyyy à HH:mm:ss')}</Text>
+                  <Text>Date d'expiration: Le {format(policy.expiration, 'dd/MM/yyyy')}</Text> 
                 </Box>
               ))}
             </VStack>

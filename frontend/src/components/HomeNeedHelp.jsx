@@ -52,9 +52,9 @@ const ContactBox = ({ icon, title, contactInfo }) => {
       direction="row"
       textAlign="left"
       bg="white"
-      boxShadow="lg"
+      boxShadow="0px 4px 6px #25D366"
+      _hover={{ boxShadow: "lg" }}
       borderRadius="2xl"
-      _hover={{ boxShadow: "0px 4px 6px #25D366" }}
       justifyContent="flex-start"
       alignItems="center"
       wrap="nowrap"
