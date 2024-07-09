@@ -52,7 +52,7 @@ const Dashboard = () => {
         color="white"
         py="4"
         px="3"
-        display={{ base: 'none', md: 'block' }}
+        display={{ base: 'none', lg: 'block' }}
       >
         <VStack spacing="4" align="stretch">
           <Text fontSize="2xl" fontWeight="bold" mb="4">MENU</Text>
@@ -114,7 +114,7 @@ const Dashboard = () => {
         </VStack>
       </Box>
 
-      {/** Mobile sidebar menu */}
+      {/** Mobile and Tablet sidebar menu */}
       { 
         handleMenu && (
           <Box 
@@ -123,7 +123,7 @@ const Dashboard = () => {
             color="white"
             py="4"
             px="3"
-            display={{ base: 'block', md: 'none' }}
+            display={{ base: 'block', lg: 'none' }}
             position={''}
           >
             <VStack spacing="4" align="stretch">

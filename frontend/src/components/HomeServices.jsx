@@ -36,6 +36,7 @@ const Services = () => {
             fontSize="lg"
             w={{lg: "60%"}}
             m={'auto'}
+            textAlign={{base: 'justify', md: 'start'}}
           >
             Acheter une assurance voiture en ligne présente plusieurs avantages,
             notamment en termes de commodité, de coûts et de personnalisation. 

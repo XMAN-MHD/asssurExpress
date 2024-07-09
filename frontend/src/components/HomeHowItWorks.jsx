@@ -17,6 +17,7 @@ const HowItWorks = () => {
         w={{lg: "60%"}}
         m={'auto'}
         mb={10}
+        textAlign={{base: 'justify', md: 'start'}}
       >
         Découvrez notre processus simple et sécurisé pour acheter votre assurance en ligne. 
         Obtenez un devis instantané en fournissant vos informations, choisissez les options 

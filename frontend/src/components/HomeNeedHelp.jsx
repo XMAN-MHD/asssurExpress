@@ -16,13 +16,14 @@ const NeedHelp = () => {
         w={{lg: "60%"}}
         m={'auto'}
         mb={10}
+        textAlign={{base: 'justify', md: 'start'}}
       >
         Besoin de plus d'informations sur nos services d'assurance ou prêt à démarrer votre couverture ? 
         N'hésitez pas à nous contacter. Notre équipe est à votre disposition pour répondre à toutes vos 
         questions.
       </Text>  
       {/** Contacts */}
-      <Flex direction={{ base: 'column', lg: 'row' }} gap={10} wrap="wrap">
+      <Flex direction={{ base: 'column', md: 'row' }} gap={10} wrap="wrap">
         <ContactBox
           icon={<Icon as={FaPhone} color="white" boxSize={6} />}
           title="Téléphone"
@@ -76,7 +77,7 @@ const ContactBox = ({ icon, title, contactInfo }) => {
       {/* Contact Information */}
       <Box flex="1">
         <Heading fontSize="lg" mb={1}>{title}</Heading>
-        <Text>{contactInfo}</Text>
+        <Text fontSize={{base: 12, md: 14}}>{contactInfo}</Text>
       </Box>
     </Flex>
   );

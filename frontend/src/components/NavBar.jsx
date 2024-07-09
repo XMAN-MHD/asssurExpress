@@ -54,20 +54,20 @@ const NavBar = () => {
         <HStack spacing={20} alignItems="center"> 
            <Flex gap={2} as={RouterLink} to="/">
             <Image src={logo} alt="logo" boxSize={8} />
-            <Text fontWeight="bold" mb={1} color="white" fontSize={20}>
+            <Text fontWeight="bold" mb={1} color="white" fontSize={30}>
               Assur'Express
             </Text>
           </Flex> 
         </HStack> 
         
-        {/* Menu button for mobile view */}
+        {/* Menu button for mobile and tablet view */}
         {
           location.pathname !== '/dashboard' && (
             <IconButton
               size="lg"
               icon={isOpen ? <FaTimes /> : <FaBars />}
               aria-label="Open Menu"
-              display={{ md: 'none' }}
+              display={{ base: 'flex', lg: 'none' }}
               _hover={{ bg: 'transparent' }}
               onClick={isOpen ? onClose : onOpen}
               bg="transparent"
@@ -75,14 +75,14 @@ const NavBar = () => {
           )
         }
 
-        {/* Dashboard menu button for mobile view */}
+        {/* Dashboard menu button for mobile and tablet view */}
         {
           location.pathname == '/dashboard' && (
             <IconButton
               size="lg"
               icon={handleMenu ? <FaTimes /> : <FaBars />}
               aria-label="Open Menu"
-              display={{ md: 'none' }}
+              display={{ base: 'flex', lg: 'none' }}
               _hover={{ bg: 'transparent' }}
               onClick={handleDashboardMenu}
               bg="transparent"
@@ -95,10 +95,10 @@ const NavBar = () => {
           alignItems="center"
           justifyContent={"flex-end"}
           flexBasis={"80%"}
-          display={{base: 'none', md: 'flex'}}
+          display={{base: 'none', lg: 'flex'}}
         >
           {/* Navigation links for desktop view */}
-          <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }} marginRight={"20px"}>
+          <HStack as="nav" spacing={4} display={{ base: 'none', lg: 'flex' }} marginRight={"20px"}>
             <Link
               as={RouterNavLink}
               to="/"
@@ -106,6 +106,7 @@ const NavBar = () => {
               fontWeight={600}
               _hover={{ textDecoration: 'none' }}
               _activeLink={{ color: 'primary.800', bg: 'white', p: 1, borderRadius: 5 }}
+              textTransform={"uppercase"}
             >
               Accueil
             </Link>
@@ -116,6 +117,7 @@ const NavBar = () => {
               fontWeight={600}
               _hover={{ textDecoration: 'none' }}
               _activeLink={{ color: 'primary.800', bg: 'white', p: 1, borderRadius: 5 }}
+              textTransform={"uppercase"}
             >
               Partenaires
             </Link>
@@ -126,6 +128,8 @@ const NavBar = () => {
               fontWeight={600}
               _hover={{ textDecoration: 'none' }}
               _activeLink={{ color: 'primary.800', bg: 'white', p: 1, borderRadius: 5 }}
+              textTransform={"uppercase"}
+
             >
               Qui Sommes-Nous
             </Link>
@@ -186,12 +190,12 @@ const NavBar = () => {
         </Flex>
       </Flex>
 
-      {/* Navigation links for mobile view */}
+      {/* Navigation links for mobile and tablet view */}
       {isOpen && (
         <Box
           pt={4}
           pb={4}
-          display={{ base: 'flex', md: 'none' }}
+          display={{ base: 'flex', lg: 'none' }}
           bg="white"
           width="100%"
           px={2}
