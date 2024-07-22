@@ -41,7 +41,7 @@ const Dashboard = () => {
     dispatch(logout());
     navigate('/')
   };
-
+  {/** Dashboard view */}
   return (
     <Flex minH={"800px"}>
 
@@ -199,7 +199,7 @@ const Dashboard = () => {
       }
 
       {/** Main content  */}
-      <Box flex="1" bg="primary.100" p={{base: 2, md: 6}}>
+      <Box flex="1" bg="primary.100" p={{base: 1, md: 6}}>
         <Box>
           {/* <Text fontSize="2xl" fontWeight="bold" mb="4">Bienvenue sur votre tableau de bord</Text>
           <Divider mb="4" /> */}

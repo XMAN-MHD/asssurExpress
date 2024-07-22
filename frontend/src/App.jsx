@@ -10,6 +10,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Toaster } from 'react-hot-toast';
 import theme from './theme';
 import { useSelector } from 'react-redux';
+import ForgotPassword from './components/pages/ForgotPassword';
+import ResetPassword from './components/pages/ResetPassword';
 
 function App() {
     // Get user data from the store
@@ -26,6 +28,8 @@ function App() {
                     <Route path='/signin' element={<SignIn />} />
                     <Route path='/signup' element={<SignUp />} />
                     <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='/forgot-password' element={<ForgotPassword />} />
+                    <Route path='/reset-password/:token' element={<ResetPassword />} />
                     <Route path='*' element={<NotFound />} /> {/* Catch-all route for unmatched paths */}
                 </Routes>
             </BrowserRouter>

@@ -9,7 +9,7 @@ const DashboardHome = () => {
   const dispatch = useDispatch();
   // Mock data for the user's policies and activities
   const { user } = useSelector((state) => state.auth);
-  const {prenom, nom, _id} = user;
+  const {prenom, nom} = user;
   const userName = `${prenom} ${nom}`;
 
   useEffect(() => {
@@ -79,6 +79,7 @@ const DashboardHome = () => {
     });
   }
 
+  {/* Dashboard Home view */}
   return (
     <>
       {/* Use react-helmet to set the document head properties */}
@@ -86,7 +87,7 @@ const DashboardHome = () => {
         <title>Tableau de Bord - Bienvenue, {userName}!</title>
         <meta name="description" content={`Bienvenue sur votre tableau de bord, ${userName}. Gérez vos polices d'assurance et restez informé de vos notifications.`} />
       </Helmet>
-      <Box p={6} bg={bgColor} rounded="md" shadow="md">
+      <Box p={{md:6}} bg={bgColor} rounded="md" shadow="md">
         {/* Welcome heading */}
         <Heading as="h1" size="xl" mb={4} color={primaryColor}>Bienvenue, {userName}!</Heading>
         <Divider mb={10} />

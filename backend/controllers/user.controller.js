@@ -5,6 +5,18 @@ import { createAvatar } from '@dicebear/core';
 import { initials } from '@dicebear/collection';
 import jwt from 'jsonwebtoken';
 import {Buffer} from 'buffer' 
+import crypto from 'crypto';
+import nodemailer from 'nodemailer';
+
+
+// Create a reusable transporter object using the default SMTP transport
+const transporter = nodemailer.createTransport({
+  service: 'Gmail', // Email service provider
+  auth: {
+    user: process.env.EMAIL_USER, // Your email address
+    pass: process.env.EMAIL_PASS, // Your email password or application-specific password
+  },
+});
 
 // Register a new user
 export const registerUser = async (req, res, next) => {
@@ -157,7 +169,8 @@ export const logUser = async (req, res, next) => {
         _id: userExists._id,
         nom: userExists.nom,
         prenom: userExists.prenom,
-        telephone:userExists.telephone,
+        telephone: userExists.telephone,
+        email: userExists.email,
         avatar: userExists.avatar,
       });
 
@@ -203,6 +216,83 @@ export const updateUser = async (req, res, next) => {
     res.status(200).json(rest);
   } catch (error) {
     next({ status: 500, message: "Erreur lors de la mise à jour de l'utilisateur.", error: error.message });
+  }
+};
+
+// Request to forgot password
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Find the user by email address
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' }); // User not found
+    }
+
+    // Generate a secure token for password reset
+    const token = crypto.randomBytes(32).toString('hex');
+    user.resetPasswordToken = token; // Set the reset token
+    user.resetPasswordExpires = Date.now() + 3600000; // Set expiration time (1 hour from now)
+
+    // Save the updated user document
+    await user.save();
+
+    // Create a URL for the password reset link
+    const resetURL = `http://localhost:5173/reset-password/${token}`;
+    const message = `Vous recevez cet e-mail parce que vous (ou quelqu'un d'autre) avez demandé la réinitialisation d'un mot de passe. Merci de faire votre demande via le lien suivant: \n\n ${resetURL}`;
+
+    // Define the email options
+    const mailOptions = {
+      from: process.env.EMAIL_USER, // Sender email address
+      to: email, // Recipient email address
+      subject: 'Réinitialisation de Mot de Passe', // Subject of the email
+      text: message, // Plain text body of the email
+      // Alternatively, you can use `html` if you want to send HTML content
+      // html: `<p>${message}</p>`,
+    };
+
+    // Send the email
+    await transporter.sendMail(mailOptions);
+
+    // Respond with success message
+    res.status(200).json({ message: "Le mail est envoyé." });
+
+  } catch (err) {
+    // Handle errors, and respond with an error message
+    console.error('Error processing forgot password request:', err);
+    res.status(500).json({ message: "Le mail n'a pas pu être envoyé." });
+  }
+};
+
+// Reset user password
+export const resetPassword = async (req, res) => {
+  const { password, confirmPassword } = req.body;
+
+  try {
+      const user = await User.findOne({
+          resetPasswordToken: req.params.token,
+          resetPasswordExpires: { $gt: Date.now() }
+      });
+
+      if (!user) {
+          return res.status(400).json({ message: 'Jeton invalide ou expiré' });
+      }
+
+      if (password !== confirmPassword) {
+          return res.status(400).json({ message: 'Les mots de passe ne correspondent pas' });
+      }
+
+      user.password = await bcrypt.hash(password, 10);
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+
+      await user.save();
+
+      res.status(200).json({ message: 'Réinitialisation du mot de passe réussie' });
+
+  } catch (err) {
+      res.status(500).json({ message: 'Erreur lors de la réinitialisation du mot de passe' });
   }
 };
 

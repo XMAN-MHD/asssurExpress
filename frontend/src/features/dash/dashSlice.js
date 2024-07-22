@@ -55,7 +55,7 @@ export const dashboardSlice = createSlice({
                 state.policies.isError = true;
                 state.policies.message = action.payload;
                 state.policies.data = [];
-            });
+            })
     },
 });
 

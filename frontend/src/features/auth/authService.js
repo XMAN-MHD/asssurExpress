@@ -64,9 +64,65 @@ const login = async (userData) => {
     return data;
 };
 
+// Update user profile
+const updateUser = async (userData) => {
+    const response = await fetch(`${API_BASE_URL}/users/update/${userData.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include', // Include credentials (cookies, etc.)
+        body: JSON.stringify(userData)
+    });
+
+    // Check if response is OK
+    if (!response.ok) {
+        const errors = await response.json()
+        throw new Error(errors.message || 'Server returned an error');
+    }
+
+    const data = await response.json();
+    return data;
+};
+
+// Request to reset password
+const sendPasswordResetEmail = async (email) => {
+    const response = await fetch(`${API_BASE_URL}/users/forgot-password`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+    });
+
+    if (!response.ok) {
+        const errors = await response.json();
+        throw new Error(errors.message || 'Server returned an error');
+    }
+
+    return response.json();
+};
+
+// Reset password
+const resetPassword = async (token, passwordData) => {
+    const response = await fetch(`${API_BASE_URL}/users/reset-password/${token}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(passwordData)
+    });
+
+    if (!response.ok) {
+        const errors = await response.json();
+        throw new Error(errors.message || 'Server returned an error');
+    }
+
+    return response.json();
+};
 
 const logout = () => localStorage.removeItem('user');
 
-const authService = { register, logout, login };
+const authService = { register, logout, login, updateUser, sendPasswordResetEmail, resetPassword };
 
 export default authService;

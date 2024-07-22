@@ -75,7 +75,7 @@ function SignUp() {
       justifyContent="center" 
       px={['8', '6']} 
       py={[5, 10, 0]} 
-      mt={[0, 0, -10]}
+      mt={[0, 0, -5]}
     >
       <Box maxW="sm">
         <Heading as="h1" textAlign="center">
