@@ -27,16 +27,6 @@ const components = {
       },
     },
   },
-  Button: {
-    baseStyle: {
-      _focus: {
-        boxShadow: 'none',
-      },
-      _active: {
-        bg: 'primary.500',
-      },
-    },
-  },
 };
 
 const theme = extendTheme(

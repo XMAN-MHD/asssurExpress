@@ -1,29 +1,62 @@
 // src/components/home/NeedHelp.jsx
 import React from 'react';
-import { Box, Flex, Text, Heading, Icon } from '@chakra-ui/react';
+import { Box, Flex, Text, Heading, useColorModeValue, Icon} from '@chakra-ui/react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const NeedHelp = () => {
+
+  // Color mode value
+  const primaryColor = useColorModeValue('primary.100');
+
+  // VIEW
   return (
-    <Box as="section" pt={20} pb={5} px={{ base: '10', md: '59' }}>
-      <Heading fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={10} textAlign={'center'}>
+    <Box as='section'>
+      {/* Main container using Flexbox for layout */}
+      <Flex
+        as="section"
+        justifyContent="center"
+        direction={{ base: 'column', lg: 'column' }}
+        flexWrap="wrap"
+      >
+    {/* Section 1: Additional Information */}
+    <Flex
+          as="article"
+          px={{ base: '10', md: '59' }}
+          pt={{ base: "20", lg: "20" }}
+          flexBasis="50%"
+          direction="column"
+          gap={10}
+        >
+     <Heading fontSize={{ base: '2xl', md: "5xl" }} fontWeight="bold" as="h1">
         Besoin d'aide?
       </Heading>
       {/** Text */}
       <Text 
-        mt={1}
-        fontSize="lg"
-        w={{lg: "60%"}}
-        m={'auto'}
-        mb={10}
-        textAlign={{base: 'justify', md: 'start'}}
+            fontSize="lg"
+            w={{lg: "80%"}}
+            textAlign={{base: 'justify', md: 'start'}}
       >
         Besoin de plus d'informations sur nos services d'assurance ou prêt à démarrer votre couverture ? 
         N'hésitez pas à nous contacter. Notre équipe est à votre disposition pour répondre à toutes vos 
         questions.
       </Text>  
+      </Flex>
       {/** Contacts */}
-      <Flex direction={{ base: 'column', md: 'row' }} gap={10} wrap="wrap">
+      <Flex
+          direction="column"
+          gap={5}
+          justifyContent="space-between"
+          as="section"
+          flexBasis="50%"
+          px={{base:10, md: 59}}
+          pt={10}
+      >
+        <Flex 
+            flexWrap="wrap" 
+            justifyContent="space-between"
+            direction={{ base: 'column', md: 'row' }}
+            gap={{ base: '5', md: '0' }}
+        >
         <ContactBox
           icon={<Icon as={FaPhone} color="white" boxSize={6} />}
           title="Téléphone"
@@ -39,11 +72,14 @@ const NeedHelp = () => {
           title="Adresse"
           contactInfo="123 Rue de l'Assurance, 75001 Dakar, Sénégal"
         />
+        </Flex>
       </Flex>
+      </Flex> 
     </Box>
   );
 };
 
+// contact box item
 const ContactBox = ({ icon, title, contactInfo }) => {
   return (
     <Flex
@@ -52,10 +88,7 @@ const ContactBox = ({ icon, title, contactInfo }) => {
       p={6}
       direction="row"
       textAlign="left"
-      bg="white"
-      boxShadow="0px 4px 6px #25D366"
-      _hover={{ boxShadow: "lg" }}
-      borderRadius="2xl"
+      bg="primary.50"
       justifyContent="flex-start"
       alignItems="center"
       wrap="nowrap"

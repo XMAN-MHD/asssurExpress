@@ -5,7 +5,7 @@ import { Box, Text, Link } from '@chakra-ui/react';
 
 const Footer = () => {
   return (
-    <Box as="footer" mt={20} bg="gray.800" color="white" py={4} textAlign="center">
+    <Box as="footer" mt={20} bg="primary.500" color="white" py={4} textAlign="center">
       <Text>
             &copy; {new Date().getFullYear()} &nbsp;
             <Link 

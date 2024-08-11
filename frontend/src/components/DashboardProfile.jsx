@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Heading, VStack, Divider, useColorModeValue, FormControl, FormLabel, Input, IconButton, Button, HStack, Text, FormErrorMessage } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
-import { FaEdit, FaSave, FaTimes } from 'react-icons/fa';
+import { FaSave, FaTimes } from 'react-icons/fa';
 import { updateProfile, updatePassword } from '../features/auth/authSlice';
 import toast from 'react-hot-toast';
 
@@ -29,9 +29,11 @@ const DashboardProfile = () => {
     confirmNewPassword: '',
   });
 
-  // Determine colors based on light or dark mode
+  // Color Mode Value
   const bgColor = useColorModeValue('white', 'gray.700');
+  const textColor = useColorModeValue('white');
   const primaryColor = useColorModeValue('primary.500', 'primary.200');
+  const secondaryBtnBgColor = useColorModeValue('gray.700');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,6 +48,8 @@ const DashboardProfile = () => {
   const handleSave = () => {
     dispatch(updateProfile(formValues));
     setIsEditing(false);
+    toast.success('Les modifications prendront effet lors de votre prochaine connexion.')
+    
   };
 
   const handleCancel = () => {
@@ -174,15 +178,21 @@ const DashboardProfile = () => {
             ) : (
               <>
                 <Button
-                  variant="outline"
-                  color={primaryColor}
+                  color={textColor }
+                  bgColor= {primaryColor}
                   onClick={() => setIsEditing(true)}
                 >
                   Modifier profil
                 </Button>
-                <Button onClick={() => setIsChangingPassword(true)} colorScheme="black" variant="outline">
+                <Button 
+                  onClick={() => setIsChangingPassword(true)} 
+                  bgColor= {secondaryBtnBgColor} 
+                  color={textColor} 
+                  _hover={{bgColor:'gray.900'}}
+                >
                   Changer le mot de passe
                 </Button>
+                
               </>
             )}
           </HStack>

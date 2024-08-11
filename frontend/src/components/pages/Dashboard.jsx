@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   const { handleMenu } = useSelector(state => state.dashboard);
 
-  // Use react router hooks
+  //  Hooks
   const dispatch = useDispatch();
   const navigate = useNavigate()
 
@@ -87,7 +87,7 @@ const Dashboard = () => {
             color={activeSection === 'purchase' ? 'black' : 'primary.500'}
             onClick={() => setActiveSection('purchase')}
           >
-            Acheter   
+            S'Assurer 
           </Button>
           <Button
             leftIcon={<FaSync />}
@@ -160,7 +160,7 @@ const Dashboard = () => {
                 color={activeSection === 'purchase' ? 'black' : 'primary.500'}
                 onClick={() => setActiveSection('purchase')}
               >
-                Acheter 
+                S'Assurer
               </Button>
               <Button
                 leftIcon={<FaSync />}
@@ -201,8 +201,6 @@ const Dashboard = () => {
       {/** Main content  */}
       <Box flex="1" bg="primary.100" p={{base: 1, md: 6}}>
         <Box>
-          {/* <Text fontSize="2xl" fontWeight="bold" mb="4">Bienvenue sur votre tableau de bord</Text>
-          <Divider mb="4" /> */}
           {renderContent()}
         </Box>
       </Box>

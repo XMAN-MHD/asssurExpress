@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Flex, Text, Button, Icon, Heading, Image } from '@chakra-ui/react';
+import { Flex, Text, Icon, Heading, useColorModeValue, Box } from '@chakra-ui/react';
 import { 
   FaMobile,
   FaShoppingCart, 
@@ -11,8 +11,13 @@ import {
 } from 'react-icons/fa';
 
 const Services = () => {
+  
+  // Color mode value
+  const primaryColor = useColorModeValue('primary.100');
+
+  // VIEW
   return (
-    <section>
+    <Box as='section' bg={"#e9fbf0"} pb={12}>
       {/* Main container using Flexbox for layout */}
       <Flex
         as="section"
@@ -29,13 +34,12 @@ const Services = () => {
           direction="column"
           gap={10}
         >
-          <Heading fontSize={{ base: '2xl', md: "5xl" }} fontWeight="bold" as="h1" textAlign={'center'}>
+          <Heading fontSize={{ base: '2xl', md: "5xl" }} fontWeight="bold" as="h1">
             Pourquoi nous choisir?
           </Heading>
           <Text 
             fontSize="lg"
-            w={{lg: "60%"}}
-            m={'auto'}
+            w={{lg: "80%"}}
             textAlign={{base: 'justify', md: 'start'}}
           >
             Acheter une assurance voiture en ligne présente plusieurs avantages,
@@ -97,26 +101,12 @@ const Services = () => {
             />
           </Flex>
         </Flex>
-        {/* <Flex
-          px={{ base: '10', md: '59' }}
-          flexBasis="50%"
-          direction="column"
-        >
-          <Button 
-            as={RouterLink} 
-            size="lg" 
-            to={'/about-us'} 
-            w={{ base: "120px", md: "150px", lg: "160px" }}
-          >
-              Voir Plus
-          </Button>
-        </Flex> */}
       </Flex>  
-    </section>
+    </Box>
   );
 };
 
-// FeatureBox component to represent each feature/benefit
+// Service Box Item
 const FeatureBox = ({ icon, text }) => {
   return (
     <Flex 
@@ -125,9 +115,6 @@ const FeatureBox = ({ icon, text }) => {
       flexWrap="wrap"
       textAlign="center" 
       bg="white"
-      boxShadow="0px 4px 6px #25D366"
-      borderRadius="2xl"
-      _hover={{ boxShadow: "lg" }}
       justifyContent="center"
       alignItems="center"
       direction="column"

@@ -23,8 +23,8 @@ const Home = () => {
         {/* Error boundary to catch errors in Hero component */}
         <ErrorBoundary>
           <Hero />
-          <Services />
           <HowItWorks />
+          <Services />
           <NeedHelp />
           <Footer />
         </ErrorBoundary>

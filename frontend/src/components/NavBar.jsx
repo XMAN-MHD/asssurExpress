@@ -161,7 +161,7 @@ const NavBar = () => {
                   _hover={{ bg: 'primary.100' }}
                   _focus={{ bg: 'primary.100' }}
                 >
-                  Mon Compte
+                  Tableau De Bord
                 </MenuItem>
                 <MenuItem
                   onClick={handleLogout}
@@ -257,7 +257,7 @@ const NavBar = () => {
                   color={'primary.800'}
                   onClick={onClose}
                 > 
-                  Mon Compte
+                  Tableau De Bord
                 </Link>
               )
             }

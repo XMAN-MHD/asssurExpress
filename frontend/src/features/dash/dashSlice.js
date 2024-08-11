@@ -26,6 +26,10 @@ const initialState = {
         isSuccess: false,
         isError: false,
         message: ''
+    },
+    purchase: {
+        type: 'Assurance Digitale',
+        company: 'Allianz',
     }
 };
 
@@ -37,6 +41,12 @@ export const dashboardSlice = createSlice({
         toggleMenu: (state) => {
             state.handleMenu = !state.handleMenu;
         },
+        purchasePolicyType: (state, action) => {
+            state.purchase.type = action.payload;
+        }, 
+        purchasePolicyCompany: (state, action) => {
+            state.purchase.company = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -60,5 +70,5 @@ export const dashboardSlice = createSlice({
 });
 
 // Export actions and reducer
-export const { toggleMenu } = dashboardSlice.actions;
+export const { toggleMenu, purchasePolicyType, purchasePolicyCompany } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

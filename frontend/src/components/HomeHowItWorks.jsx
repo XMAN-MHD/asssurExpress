@@ -1,21 +1,25 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Flex, Text, Heading, Icon, Button } from '@chakra-ui/react';
+import { Box, Flex, Text, Heading, Icon, useColorModeValue, Button } from '@chakra-ui/react';
 import { FaFileAlt, FaCogs, FaCreditCard, FaEnvelope } from 'react-icons/fa';
 
 const HowItWorks = () => {
+
+  // Color mode value
+  const primaryColor = useColorModeValue('primary.100');
+
+  // View
   return (
-    <Box as="section" pt={20} pb={5} px={{ base: '10', md: '59' }}>
+    <Box as="section" pt={20} pb={12} px={{ base: '10', md: '59' }}>
       {/* Section heading */}
-      <Heading fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={10} textAlign={'center'}>
+      <Heading fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={10}>
         Comment ça marche?
       </Heading>
       {/** Text */}
       <Text 
         mt={1}
         fontSize="lg"
-        w={{lg: "60%"}}
-        m={'auto'}
+        w={{lg: "80%"}}
         mb={10}
         textAlign={{base: 'justify', md: 'start'}}
       >
@@ -62,6 +66,7 @@ const HowItWorks = () => {
   );
 };
 
+// Step box item
 const StepBox = ({ icon, title, description }) => {
   return (
     <Flex 
@@ -70,11 +75,7 @@ const StepBox = ({ icon, title, description }) => {
       p={6}
       direction="column"
       textAlign="center"
-      bg="white"
-      boxShadow="0px 4px 6px #25D366"
-      _hover={{ boxShadow: "lg" }}
-      borderRadius="2xl"
-      
+      bg="primary.50"
       justifyContent="center"
       alignItems="center"
     >

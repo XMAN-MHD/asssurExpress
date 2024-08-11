@@ -20,9 +20,10 @@ const DashboardHome = () => {
   const { data: policies, isLoading, isError, message } = useSelector(state => state.dashboard.policies);
   // Array of user's insurance policies 
 
-  // Determine colors based on light or dark mode
+  // Color mode value
   const bgColor = useColorModeValue('white', 'gray.700');
   const primaryColor = useColorModeValue('primary.500', 'primary.200');
+  const secondaryBtnBgColor = useColorModeValue('gray.700');
   
   // Function to determine background color for notifications based on type
   const notificationBg = (type) => type === 'warning' ? 'yellow.100' : type === 'success' ? 'green.100' : 'red.100';
@@ -103,8 +104,8 @@ const DashboardHome = () => {
         ): (
           <Box maxH="300px" overflowY="auto" mb={4}>
             <VStack align="start" spacing={4}>
-              {policies.map(policy => (
-                <Box key={policy.id} p={4} borderWidth="1px" borderRadius="md" width="100%" bg="beige">
+              {policies.map((policy, index) => (
+                <Box key={index} p={4} borderWidth="1px" borderRadius="md" width="100%" bg="beige">
                   <Text fontSize="lg" fontWeight="bold">{policy.vehicle.brand} {policy.vehicle.model}</Text>
                   <Text>Date de délivrance: Le {format(new Date(policy.deliverance), 'dd/MM/yyyy à HH:mm:ss')}</Text>
                   <Text>Date d'expiration: Le {format(policy.expiration, 'dd/MM/yyyy')}</Text> 
@@ -133,8 +134,8 @@ const DashboardHome = () => {
         {/* Section for quick action buttons */}
         <Heading as="h2" size="lg" mb={4}>Actions Rapides</Heading>
         <Flex flexDirection={{ base: 'column', lg: 'row' }}>
-          <Button colorScheme="blue" mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Renouveler une Police</Button>
-          <Button colorScheme="green" mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Acheter une Nouvelle Assurance</Button>
+          <Button bgColor= {primaryColor} mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Renouveler une Police</Button>
+          <Button bgColor= {secondaryBtnBgColor} _hover={{bgColor: 'gray.900'}} mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Acheter une Nouvelle Assurance</Button>
           <Button colorScheme="red">Contacter le Support</Button>
         </Flex>
       </Box>

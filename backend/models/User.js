@@ -51,6 +51,7 @@ const userSchema = new Schema({
       validator: (value) => /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(value), // Custom validation function for email format
       message: 'Le format de l\'email est invalide.', // Custom error message for validation
     },
+    unique: [true, 'L\'email existe déjà.'], // Unique field with custom error message
   },
   // resetPasswordToken field: Optional, for storing password reset token
   resetPasswordToken: {
