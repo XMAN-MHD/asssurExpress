@@ -10,7 +10,7 @@ const HowItWorks = () => {
 
   // View
   return (
-    <Box as="section" pt={20} pb={12} px={{ base: '10', md: '59' }}>
+    <Box as="section" pt={20} pb={12} px={{ base: '2', md: '59' }}>
       {/* Section heading */}
       <Heading fontSize={{ base: '2xl', md: '5xl' }} fontWeight="bold" mb={10}>
         Comment ça marche?

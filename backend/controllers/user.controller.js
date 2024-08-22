@@ -171,6 +171,7 @@ export const logUser = async (req, res, next) => {
         prenom: userExists.prenom,
         telephone: userExists.telephone,
         email: userExists.email,
+        address: userExists.address,
         avatar: userExists.avatar,
       });
 

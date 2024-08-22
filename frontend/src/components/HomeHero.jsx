@@ -17,7 +17,7 @@ const Hero = () => {
       alignItems="center"
       position="relative"
       py={10}
-      px={{base:'10', md:'59'}}
+      px={{base:'2', md:'59'}}
       zIndex={0}
     >
       {/* Overlay for semi-transparent background */}

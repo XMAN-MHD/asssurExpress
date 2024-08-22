@@ -18,6 +18,12 @@ const userSchema = new Schema({
     minlength: [2, 'Le prénom doit contenir au moins 2 caractères.'], // Minimum length validation with custom error message
     maxlength: [50, 'Le prénom doit contenir moins de 50 caractères.'], // Maximum length validation with custom error message
   },
+  address: {
+    type: String,
+    default: '',
+    minlength: [3, 'L\'adresse doit contenir au moins 3 caractères.'], // Minimum length validation with custom error message
+    maxlength: [50, 'L\'adresse doit contenir moins de 50 caractères.'], // Maximum length validation with custom error message
+  },
   // Telephone field: Required, unique, and must match the specified regex pattern
   telephone: {
     type: String,

@@ -19,8 +19,6 @@ const register = async (userData) => {
         throw new Error(errors.message || 'Server returned an error');
     }
 
-    
-   
    // get the response json data and parse it 
     const data = await response.json();
 
@@ -51,8 +49,6 @@ const login = async (userData) => {
         throw new Error(errors.message || 'Server returned an error');
     }
 
-    
-   
    // get the response json data and parse it 
     const data = await response.json();
 

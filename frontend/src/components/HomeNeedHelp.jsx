@@ -21,7 +21,7 @@ const NeedHelp = () => {
     {/* Section 1: Additional Information */}
     <Flex
           as="article"
-          px={{ base: '10', md: '59' }}
+          px={{ base: '2', md: '59' }}
           pt={{ base: "20", lg: "20" }}
           flexBasis="50%"
           direction="column"
@@ -48,7 +48,7 @@ const NeedHelp = () => {
           justifyContent="space-between"
           as="section"
           flexBasis="50%"
-          px={{base:10, md: 59}}
+          px={{base:2, md: 59}}
           pt={10}
       >
         <Flex 

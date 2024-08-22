@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, Divider, useColorModeValue } from '@chakra-ui/react';
+import { Box, Heading, Flex, Divider, useColorModeValue } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet';
 import DashboardPurchaseType from './DashboardPurchaseType';
 import DashboardPurchaseCompany from './DashboardPurchaseCompany';
 import DashboardPurchaseCost from './DashboardPurchaseCost';
+import DashboardPurchaseConfirm from './DashboardPurchaseConfirm';
 import DashboardPurchaseVehicle from './DashboardPurchaseVehicle';
 import DashboardPurchaseOwner from './DashboardPurchaseOwner';
 import DashboardPurchasePhoto from './DashboardPurchasePhoto';
@@ -28,6 +29,8 @@ const Purchase = () => {
         return <DashboardPurchaseCompany nextStep={nextStep} />;
       case 'purchaseCost':
         return <DashboardPurchaseCost nextStep={nextStep} />;
+      case 'purchaseConfirm':
+        return <DashboardPurchaseConfirm nextStep={nextStep} />;
       case 'purchaseVehicle':
         return <DashboardPurchaseVehicle nextStep={nextStep} />;
       case 'purchaseOwner':
@@ -52,11 +55,11 @@ const Purchase = () => {
       <Box p={6} bg={bgColor} rounded="md" shadow="md">
         <Heading as="h1" size="xl" mb={4} color={primaryColor}>Achetez une assurance</Heading>
         <Divider mb={10} />
-        <VStack align="start" spacing={4}>
-          <Box>
+        <Flex>
+          <Box w={'full'}>
             {renderContent()}
           </Box>
-        </VStack>
+        </Flex>
       </Box>
     </>
   );

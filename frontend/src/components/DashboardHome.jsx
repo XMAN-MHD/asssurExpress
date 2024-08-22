@@ -135,7 +135,7 @@ const DashboardHome = () => {
         <Heading as="h2" size="lg" mb={4}>Actions Rapides</Heading>
         <Flex flexDirection={{ base: 'column', lg: 'row' }}>
           <Button bgColor= {primaryColor} mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Renouveler une Police</Button>
-          <Button bgColor= {secondaryBtnBgColor} _hover={{bgColor: 'gray.900'}} mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Acheter une Nouvelle Assurance</Button>
+          <Button bgColor= {secondaryBtnBgColor} _hover={{bgColor: 'gray.800'}} mb={{ base: 4, lg: 0 }} mr={{ base: 0, lg: 4 }}>Acheter une Nouvelle Assurance</Button>
           <Button colorScheme="red">Contacter le Support</Button>
         </Flex>
       </Box>
