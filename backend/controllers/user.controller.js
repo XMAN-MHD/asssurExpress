@@ -107,6 +107,7 @@ export const getAllUsers = async (req, res, next) => {
     const users = await User.find({});
     res.status(200).json(users);
   } catch (error) {
+    console.log(error.message);
     next({ status: 400, message: "mauvaise requette.", error: error.message });
   }
 };

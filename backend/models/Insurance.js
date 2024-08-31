@@ -93,16 +93,6 @@ const insuranceSchema = new Schema({
       required: [true, 'L\'adresse du propriétaire est obligatoire.']
     }
   },
-  photos: {
-    registrationCardFront: {
-      type: String,
-      required: [true, 'La photo recto de la carte grise est obligatoire.']
-    },
-    registrationCardBack: {
-      type: String,
-      required: [true, 'La photo verso de la carte grise est obligatoire.']
-    }
-  },
   price: {
     type: Number,
     required: [true, 'Le prix de l\'assurance est obligatoire.']

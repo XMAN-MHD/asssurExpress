@@ -26,12 +26,12 @@ const DashboardPurchaseConfirm = ({ nextStep}) => {
   // Render the component
   return (
     <Box>
-      <Heading as="h2" size="md" mb={4}>Confirmer votre achat</Heading>
+      <Heading as="h2" size="lg" mb={4}>Devis</Heading>
       <VStack align="start" spacing={4}>
         <Text>Le coût de votre police d'assurance est de:</Text>
         <Heading size="lg" color={primaryColor}> {`${cost} FCFA`}</Heading>
         {isError && <Heading size="sm" color={'red'}>Erreur de calcul. Veuillez vérifier vos données, s'il vous plaît.</Heading>}
-        <Text>Voulez-vous continuer avec cet achat ?</Text>
+        <Text>Voulez-vous continuer ?</Text>
         <Flex gap={4}>
           {/* Button to go back to the previous step */}
           <Button onClick={handleBack} bg={secondaryBtnBgColor} _hover={{ bgColor: 'gray.800' }} mt={5}>Non</Button>

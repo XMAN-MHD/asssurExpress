@@ -92,6 +92,7 @@ const ContactBox = ({ icon, title, contactInfo }) => {
       justifyContent="flex-start"
       alignItems="center"
       wrap="nowrap"
+      mb={{md: 2}}
     >
       {/* Icon container */}
       <Flex

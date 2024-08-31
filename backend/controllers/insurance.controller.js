@@ -35,24 +35,45 @@ export const calculateInsurancePrice = async (req, res) => {
 };
 
 // Create a new insurance
-export const createInsurance = async (req, res) => {
+export const createInsurance = async (req, res, next) => {
     try {
-        const { type, company, vehicleCategory, vehiclePower, insuranceDuration, vehicle, owner, photos } = req.body;
+        const  {
+          type, 
+          cost,
+          company,
+          category, 
+          power, 
+          insuranceDuration, 
+          registrationNumber,
+          brand,
+          model,
+          firstRegistrationDate,
+          energy,
+          firstName,
+          lastName,
+          phone,
+          address,
+        } = req.body;
+
+        // gather the data about the vehicle: 
+        const vehicle = {
+          registrationNumber,
+          brand,
+          model,
+          firstRegistrationDate,
+          energy,
+        };
+        
+        // gather the data about the owner: 
+        const owner = {
+          firstName,
+          lastName,
+          phone,
+          address,
+        };
+
+        // Destruct the vehicle 
         const userId = req.user.id; // Assuming you have user info in req.user after verifying the token
-        // Calculate the insurance price
-        const baseRate = 100;
-        const typeMultiplier = type === 'Assurance Digitale' ? 1.1 : 1.0;
-        const companyMultiplier = 1.0;
-        const categoryMultiplier = {
-            'Catégorie 1': 1.0,
-            'Catégorie 2': 1.2,
-            'Catégorie 3': 1.4,
-            'Catégorie 4': 1.6,
-            'Catégorie 5': 1.8,
-        }[vehicleCategory] || 1.0;
-        const powerMultiplier = vehiclePower / 100;
-        const durationMultiplier = insuranceDuration / 12;
-        const price = baseRate * typeMultiplier * companyMultiplier * categoryMultiplier * powerMultiplier * durationMultiplier;
         // calculate the insurance expiration
         const deliveranceDate = new Date();
         const expiration = new Date(deliveranceDate.setMonth(deliveranceDate.getMonth() + insuranceDuration));
@@ -61,22 +82,21 @@ export const createInsurance = async (req, res) => {
             user: userId,
             type,
             company,
-            vehicleCategory,
-            vehiclePower,
+            vehicleCategory: category,
+            vehiclePower: power,
             insuranceDuration,
             deliverance: new Date(),
             expiration,
             vehicle,
             owner,
-            photos,
-            price
+            price: cost
         });
         // Save the new insurance data
         const savedInsurance = await newInsurance.save();
         res.status(201).json(savedInsurance);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server error. Please try again later.' });
+        next({ status: 500, message: "Une erreur est survenue lors de la sauvegarde des données.", error: error.message});
     }
 };
 

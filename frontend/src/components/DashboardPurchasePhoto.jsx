@@ -1,22 +1,74 @@
-import React from 'react';
+// Packages
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Flex, Heading, Input, Box, FormControl, FormLabel, useColorModeValue, FormErrorMessage } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPolicy } from '../features/dash/dashSlice';
+import toast from 'react-hot-toast';
 
 const DashboardPurchasePhoto = ({ nextStep }) => {
+  // Get the new policy data
+  const {
+    type,
+    company,
+    category, 
+    power, 
+    duration,
+    cost,
+    vehicle,
+    owner
+  } = useSelector(state => state.dashboard.purchase);
+
+  // Retrieve the policy data saved recently
+  const { 
+    data: newPolicyData, 
+    isLoading: newPolicyLoading, 
+    isSuccess: newPolicySucceded, 
+    isError: newPolicyFailed, 
+    message: newPolicyMessage 
+  } = useSelector(state => state.dashboard.newPolicy);
+  
+
+  // React hook form tools to handle form
   const { register, handleSubmit, formState: { errors } } = useForm();
  
+  // function to dispatch actions 
+  const dispatch = useDispatch();
 
   // Chakra UI color mode values for consistent theming
   const primaryColor = useColorModeValue('primary.500', 'primary.200');
   const secondaryBtnBgColor = useColorModeValue('gray.700');
 
+  // Function to call on submit
   const onSubmit = (data) => {
+      // Save new policy data
+      dispatch(createPolicy( {
+        type,
+        company,
+        category, 
+        power, 
+        duration,
+        cost,
+        vehicle,
+        owner
+      }));
+
       // Logic to upload photos or store them in state/Redux
      
       // Navigate to the next step
       nextStep('purchasePayment');
   };
+
+  useEffect(
+    () => {
+      if (newPolicyFailed) {
+        // Affichage d'une notification d'erreur du processus de sauvagarde des données de l'assurance
+        alert(newPolicyMessage);  
+      }
+    }, 
+    [newPolicyFailed, dispatch]
+  )
+
 
   // Handle the previous step navigation
   const handlePrev = () => {

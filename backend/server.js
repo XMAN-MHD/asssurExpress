@@ -3,9 +3,11 @@
   import connectDB from './libs/dbConnect.js';
   import userRouter from './routes/user.route.js';
   import insuranceRoutes from './routes/insurance.route.js';
+  import cloudinaryRouter from './routes/cloudinary.route.js';
   import { errorHandler } from './libs/middleware.js';
   import cookieParser from 'cookie-parser';
   import cors from 'cors'; // Import the cors middleware
+  import fileUpload from 'express-fileupload'; // middleware to upload files with express
 
   // Connect to the database
   connectDB();
@@ -28,10 +30,17 @@
 
   // Enable cookie parser middleware
   app.use(cookieParser());
+  
+  // Middleware for handling file uploads
+  app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/',
+  }));
 
   // Routes
   app.use('/api/v1/users', userRouter);
   app.use('/api/v1/insurances', insuranceRoutes);
+  app.use('/api/v1/cloudinary', cloudinaryRouter);
 
   // Not found route
   app.use('*', (req, res) => {

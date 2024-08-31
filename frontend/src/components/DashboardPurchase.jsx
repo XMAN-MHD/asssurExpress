@@ -10,8 +10,38 @@ import DashboardPurchaseOwner from './DashboardPurchaseOwner';
 import DashboardPurchasePhoto from './DashboardPurchasePhoto';
 import DashboardPurchaseRecap from './DashboardPurchaseRecap';
 import DashboardPurchaseFeedback from './DashboardPurchaseFeedback';
+import { useSelector } from 'react-redux';
 
 const Purchase = () => {
+   // Get the new policy data
+   const {
+    type, 
+    cost, 
+    company,
+    category, 
+    power, 
+    duration, 
+    vehicle,
+    owner,
+  }= useSelector(state => state.dashboard.purchase);
+  const initialData = {
+    type, 
+    cost: cost.value,
+    company,
+    category, 
+    power, 
+    insuranceDuration: duration, 
+    registrationNumber: vehicle.registrationNumber,
+    brand: vehicle.brand,
+    model: vehicle.model,
+    firstRegistrationDate: vehicle.firstRegistrationDate,
+    energy: vehicle.energy,
+    firstName: owner.firstName,
+    lastName: owner.lastName,
+    phone: owner.phone,
+    address: owner.address,
+  }
+
   const bgColor = useColorModeValue('white', 'gray.700');
   const primaryColor = useColorModeValue('primary.500', 'primary.200');
 
@@ -35,10 +65,10 @@ const Purchase = () => {
         return <DashboardPurchaseVehicle nextStep={nextStep} />;
       case 'purchaseOwner':
         return <DashboardPurchaseOwner nextStep={nextStep} />;
+      case 'purchaseRecap':
+        return <DashboardPurchaseRecap nextStep={nextStep} initialData={initialData}/>;
       case 'purchasePhoto':
         return <DashboardPurchasePhoto nextStep={nextStep} />;
-      case 'purchaseRecap':
-        return <DashboardPurchaseRecap nextStep={nextStep} />;
       case 'purchaseFeedback':
         return <DashboardPurchaseFeedback />;
       default:
@@ -53,7 +83,7 @@ const Purchase = () => {
         <meta name="description" content={`Choisissez puis achetez votre assurance`} />
       </Helmet>
       <Box p={6} bg={bgColor} rounded="md" shadow="md">
-        <Heading as="h1" size="xl" mb={4} color={primaryColor}>Achetez une assurance</Heading>
+        <Heading as="h1" size="xl" mb={4} color={primaryColor} textTransform={'uppercase'}>Achetez une assurance</Heading>
         <Divider mb={10} />
         <Flex>
           <Box w={'full'}>

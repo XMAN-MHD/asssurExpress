@@ -27,7 +27,7 @@ const DashboardPurchaseCost = ({ nextStep }) => {
 
   return (
     <Box>
-      <Heading as="h2" size="md" mb={4}>Calculez le coût de votre police</Heading>
+      <Heading as="h2" size="lg" mb={4}>Calculez le coût de votre police</Heading>
       <Flex gap={4} flexDirection={{base: 'column'}} >
         <Flex flexDirection={{lg: 'row'}}>
             <FormControl isRequired>

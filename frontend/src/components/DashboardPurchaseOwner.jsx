@@ -2,12 +2,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form'; // Importing React Hook Form for form handling
 import { useDispatch } from 'react-redux'; // Importing useDispatch hook from Redux
 import { Box, Heading, FormControl, FormLabel, Input, Button, Flex, useColorModeValue, FormErrorMessage } from '@chakra-ui/react'; // Importing Chakra UI components
-import { saveOwnerDetails } from '../features/dash/dashSlice'; // Importing the Redux action to save owner details
+import { saveOwnerDetails} from '../features/dash/dashSlice'; // Importing the Redux action to save owner details
 import DOMPurify from 'dompurify'; // Importing DOMPurify to sanitize input fields
 
 const DashboardPurchaseOwner = ({ nextStep }) => {
   // Initialize React Hook Form with register, handleSubmit, and formState for error handling
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm()
+
   const dispatch = useDispatch(); // Initialize dispatch to send actions to the Redux store
 
   // Handle form submission
@@ -21,7 +22,7 @@ const DashboardPurchaseOwner = ({ nextStep }) => {
     };
     // Dispatch the sanitized owner details to the Redux store and move to the next step
     dispatch(saveOwnerDetails(sanitizedData));
-    nextStep('purchasePhoto'); // Proceed to the photo upload step
+    nextStep('purchaseRecap'); // Proceed to the photo upload step
   };
 
   // Handle the previous step navigation

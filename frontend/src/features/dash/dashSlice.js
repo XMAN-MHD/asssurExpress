@@ -1,6 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import dashService from './dashService';
 
+// Async thunk to create a policy
+export const createPolicy = createAsyncThunk(
+  'policies/create',
+  async (policy, thunkAPI) => {
+    try {
+      return await dashService.createPolicy(policy);
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Async thunk to fetch policies
 export const getPolicies = createAsyncThunk(
   'dashboard/policies',
@@ -29,9 +44,19 @@ const initialState = {
   purchase: {
     type: 'Assurance Digitale',
     company: '',
+    category: '', 
+    power: null, 
+    duration: null, 
     cost: {value: null, isError: false},
     vehicle: {},
     owner: {},
+  },
+  newPolicy: {
+    data: [],
+    isLoading: false,
+    isSuccess: false,
+    isError: false,
+    message: ''
   }
 };
 
@@ -51,6 +76,9 @@ export const dashboardSlice = createSlice({
     },
     calculatePolicyCost: (state, action) => {
       const { category, power, duration } = action.payload;
+      state.purchase.category = category;
+      state.purchase.duration = duration;
+      state.purchase.power = power;
       // Calculate the policy cost based on given criteria (implement your actual calculation logic here)
       const insuranceData = {
         1: {
@@ -187,7 +215,27 @@ export const dashboardSlice = createSlice({
         state.policies.isError = true;
         state.policies.message = action.payload;
         state.policies.data = [];
+      })
+      .addCase(createPolicy.pending, (state) => {
+        state.newPolicy.isLoading = true;
+        state.newPolicy.isSuccess = false;
+        state.newPolicy.isError = false;
+        state.newPolicymessage = ''
+      })
+      .addCase(createPolicy.fulfilled, (state, action) => {
+        state.newPolicy.isLoading = false;
+        state.newPolicy.isSuccess = true;
+        state.newPolicy.isError = false;
+        state.newPolicymessage = '',
+        state.newPolicy.data = action.payload;
+      })
+      .addCase(createPolicy.rejected, (state, action) => {
+        state.newPolicy.isLoading = false;
+        state.newPolicy.isError = true;
+        state.newPolicy.message = action.payload;
+        state.newPolicy.data = [];
       });
+    
   }
 });
 
@@ -198,6 +246,6 @@ export const {
   purchasePolicyCompany, 
   calculatePolicyCost, 
   saveVehicleDetails, 
-  saveOwnerDetails
+  saveOwnerDetails, 
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

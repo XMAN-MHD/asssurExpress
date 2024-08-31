@@ -27,7 +27,7 @@ const DashboardPurchaseVehicle = ({ nextStep }) => {
 
   return (
     <Box>
-      <Heading as="h2" size="md" mb={4}>Détails du véhicule</Heading>
+      <Heading as="h2" size="lg" mb={4}>Détails du véhicule</Heading>
       <Flex gap={4} flexDirection={{ base: 'column' }}>
         <FormControl isRequired>
           <Flex flexDirection={{base: 'column', lg: 'row'}}>
@@ -87,10 +87,10 @@ const DashboardPurchaseVehicle = ({ nextStep }) => {
               onChange={(e) => setEnergy(e.target.value)}
               _focus={{ borderColor: "#25D366", boxShadow: "0 0 0 1px #25D366" }}
             >
-              <option value="essence">Essence</option>
-              <option value="diesel">Diesel</option>
-              <option value="electric">Électrique</option>
-              <option value="hybrid">Hybride</option>
+              <option value="Essence">Essence</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Électric">Électrique</option>
+              <option value="Hybrid">Hybride</option>
             </Select>
           </Flex>
         </FormControl>

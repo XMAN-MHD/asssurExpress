@@ -30,7 +30,7 @@ const DashboardPurchaseType = ({ nextStep }) => {
   // Render the component
   return (
     <Box>
-      <Heading as="h2" size="md" mb={4}>Choisissez le type d'assurance</Heading>
+      <Heading as="h2" size="lg" mb={4}>Choisissez le type d'assurance</Heading>
       <VStack align="start" spacing={4}>
         <FormControl as="fieldset">
           <FormLabel as="legend" mb={5}>
