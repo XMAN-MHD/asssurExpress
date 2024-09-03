@@ -3,22 +3,9 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Flex, Heading, Input, Box, FormControl, FormLabel, useColorModeValue, FormErrorMessage } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPolicy } from '../features/dash/dashSlice';
 import toast from 'react-hot-toast';
 
 const DashboardPurchasePhoto = ({ nextStep }) => {
-  // Get the new policy data
-  const {
-    type,
-    company,
-    category, 
-    power, 
-    duration,
-    cost,
-    vehicle,
-    owner
-  } = useSelector(state => state.dashboard.purchase);
-
   // Retrieve the policy data saved recently
   const { 
     data: newPolicyData, 
@@ -41,17 +28,6 @@ const DashboardPurchasePhoto = ({ nextStep }) => {
 
   // Function to call on submit
   const onSubmit = (data) => {
-      // Save new policy data
-      dispatch(createPolicy( {
-        type,
-        company,
-        category, 
-        power, 
-        duration,
-        cost,
-        vehicle,
-        owner
-      }));
 
       // Logic to upload photos or store them in state/Redux
      

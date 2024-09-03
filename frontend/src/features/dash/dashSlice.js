@@ -234,8 +234,7 @@ export const dashboardSlice = createSlice({
         state.newPolicy.isError = true;
         state.newPolicy.message = action.payload;
         state.newPolicy.data = [];
-      });
-    
+      });  
   }
 });
 
