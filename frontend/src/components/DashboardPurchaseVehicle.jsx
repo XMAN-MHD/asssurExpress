@@ -89,7 +89,7 @@ const DashboardPurchaseVehicle = ({ nextStep }) => {
             >
               <option value="Essence">Essence</option>
               <option value="Diesel">Diesel</option>
-              <option value="Électric">Électrique</option>
+              <option value="Électrique">Électrique</option>
               <option value="Hybrid">Hybride</option>
             </Select>
           </Flex>

@@ -31,6 +31,23 @@ export const getPolicies = createAsyncThunk(
   }
 );
 
+// Async thunk to handle multiple file uploads
+export const uploadFiles = createAsyncThunk(
+  'dashboard/uploadFiles',
+  async (files, thunkAPI) => {
+    try {
+      const insuranceID = thunkAPI.getState().dashboard.newPolicy.data.insuranceId;
+      const registrationCardData = { insuranceID, files }; 
+      return await dashService.uploadFiles(registrationCardData);
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Define initial state
 const initialState = {
   handleMenu: false,
@@ -53,6 +70,12 @@ const initialState = {
   },
   newPolicy: {
     data: [],
+    isLoading: false,
+    isSuccess: false,
+    isError: false,
+    message: ''
+  },
+  fileUpload: {
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -234,7 +257,25 @@ export const dashboardSlice = createSlice({
         state.newPolicy.isError = true;
         state.newPolicy.message = action.payload;
         state.newPolicy.data = [];
-      });  
+      })
+      .addCase(uploadFiles.pending, (state) => {
+        state.fileUpload.isLoading = true;
+        state.fileUpload.isSuccess = false;
+        state.fileUpload.isError = false;
+        state.fileUpload.message = '';
+      })
+      .addCase(uploadFiles.fulfilled, (state, action) => {
+        state.fileUpload.isLoading = false;
+        state.fileUpload.isSuccess = true;
+        state.fileUpload.isError = false;
+        state.fileUpload.message = '';
+        // Handle successful file upload if needed
+      })
+      .addCase(uploadFiles.rejected, (state, action) => {
+        state.fileUpload.isLoading = false;
+        state.fileUpload.isError = true;
+        state.fileUpload.message = action.payload;
+      });
   }
 });
 

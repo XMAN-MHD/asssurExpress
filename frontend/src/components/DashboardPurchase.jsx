@@ -9,6 +9,7 @@ import DashboardPurchaseVehicle from './DashboardPurchaseVehicle';
 import DashboardPurchaseOwner from './DashboardPurchaseOwner';
 import DashboardPurchasePhoto from './DashboardPurchasePhoto';
 import DashboardPurchaseRecap from './DashboardPurchaseRecap';
+import DashboardPurchasePayment  from './DashboardPurchasePayment';
 import DashboardPurchaseFeedback from './DashboardPurchaseFeedback';
 import { useSelector } from 'react-redux';
 
@@ -68,7 +69,9 @@ const Purchase = () => {
       case 'purchaseRecap':
         return <DashboardPurchaseRecap nextStep={nextStep} initialData={initialData}/>;
       case 'purchasePhoto':
-        return <DashboardPurchasePhoto nextStep={nextStep} />;
+        return <DashboardPurchasePhoto nextStep={nextStep} initialData={initialData}/>;
+      case 'purchasePayment':
+        return <DashboardPurchasePayment nextStep={nextStep} />;
       case 'purchaseFeedback':
         return <DashboardPurchaseFeedback />;
       default:

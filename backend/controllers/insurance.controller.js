@@ -91,12 +91,19 @@ export const createInsurance = async (req, res, next) => {
             owner,
             price: cost
         });
+
         // Save the new insurance data
         const savedInsurance = await newInsurance.save();
-        res.status(201).json(savedInsurance);
-    } catch (error) {
-        console.error(error);
-        next({ status: 500, message: "Une erreur est survenue lors de la sauvegarde des données.", error: error.message});
+
+        // Send the response including the ID of the saved insurance
+        res.status(201).json({
+          insuranceId: savedInsurance._id,  // Include the ID in the response
+          insurance: savedInsurance  // Include the entire saved insurance document if needed
+      });
+    } 
+    catch (error) {
+      console.error(error);
+      next({ status: 500, message:  "Une erreur est survenue lors de la sauvegarde des données."});
     }
 };
 

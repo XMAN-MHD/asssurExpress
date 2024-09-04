@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Button, Flex, Heading, Input, Box, FormControl, FormLabel, useColorModeValue, FormErrorMessage } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { uploadFiles } from '../features/dash/dashSlice';
 
 const DashboardPurchasePhoto = ({ nextStep }) => {
   // Retrieve the policy data saved recently
@@ -15,6 +16,13 @@ const DashboardPurchasePhoto = ({ nextStep }) => {
     message: newPolicyMessage 
   } = useSelector(state => state.dashboard.newPolicy);
   
+  // Retrieve file uploading slice data  
+  const { 
+    isLoading, 
+    isSuccess, 
+    isError, 
+    message
+  } = useSelector(state => state.dashboard.fileUpload);
 
   // React hook form tools to handle form
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -26,25 +34,24 @@ const DashboardPurchasePhoto = ({ nextStep }) => {
   const primaryColor = useColorModeValue('primary.500', 'primary.200');
   const secondaryBtnBgColor = useColorModeValue('gray.700');
 
-  // Function to call on submit
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    try {
+      const files = [data.rectoPhoto[0], data.versoPhoto[0]]; // Ensure to use the correct file array
 
-      // Logic to upload photos or store them in state/Redux
-     
-      // Navigate to the next step
-      nextStep('purchasePayment');
-  };
-
-  useEffect(
-    () => {
-      if (newPolicyFailed) {
-        // Affichage d'une notification d'erreur du processus de sauvagarde des données de l'assurance
-        alert(newPolicyMessage);  
+      // Dispatch file upload action
+      const result = await dispatch(uploadFiles(files)).unwrap();
+      
+      if (result) {
+        toast.success("Fichiers téléchargés avec succès!");
+        nextStep('purchasePayment');
+      } else {
+        toast.error(message || "Une erreur est survenue lors du téléchargement des fichiers.");
       }
-    }, 
-    [newPolicyFailed, dispatch]
-  )
-
+    } catch (error) {
+      console.log(error);
+      toast.error(message || "Une erreur est survenue lors du téléchargement des fichiers.");
+    }
+  };
 
   // Handle the previous step navigation
   const handlePrev = () => {
@@ -91,8 +98,10 @@ const DashboardPurchasePhoto = ({ nextStep }) => {
             <Button 
                 bg={primaryColor}
                 type="submit"
+                isLoading={isLoading} 
+                loadingText="Chargement..."
             >
-            Suivant
+            {!isLoading && "Valider"}
             </Button>
         </Flex>
       </form>

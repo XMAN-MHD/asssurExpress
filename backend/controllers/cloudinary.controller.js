@@ -1,28 +1,86 @@
 import { unlinkSync } from 'fs';
 import { uploadImageToCloudinary, getImageFromCloudinary, deleteImageFromCloudinary } from '../models/cloudinary.js';
-import Insurance from '../models/Insurance.js';
+import RegistrationCard from '../models/registrationCard.js';
+
+// Upload registration card photos
 export const uploadImage = async (req, res) => {
-    try {
-      if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).json({ message: 'No files were uploaded' });
-      }
-  
-      const uploadedFile = req.files.image;
-      const result = await uploadImageToCloudinary(uploadedFile.tempFilePath, 'assurExpress');
-  
-      // Extracting the URL and public_id from Cloudinary's response
-      const { secure_url: imageUrl, public_id } = result;
-  
-      // Optionally, delete the temporary file
-      unlinkSync(uploadedFile.tempFilePath);
-  
-      // Here, you would store the imageUrl and public_id in your database
-      
-      res.json({ imageUrl, public_id });
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      res.status(500).json({ message: 'Failed to upload image' });
+  try {
+    // Check if files are uploaded
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).json({ message: 'No files were uploaded' });
     }
+
+    // Handle recto register card photo
+    let imageUrlRecto, publicIdRecto;
+    if (req.files.rectoPhoto) {
+      const rectoPhoto = req.files.rectoPhoto;
+      const resultRectoPhoto = await uploadImageToCloudinary(rectoPhoto.tempFilePath, 'assurExpress');
+
+      // Extract the URL and public_id from Cloudinary's response
+      imageUrlRecto = resultRectoPhoto.secure_url;
+      publicIdRecto = resultRectoPhoto.public_id;
+
+      // Optionally, delete the temporary file
+      try {
+        unlinkSync(rectoPhoto.tempFilePath);
+      } catch (err) {
+        console.error('Error deleting temp file:', err);
+      }
+    }
+
+    // Handle verso register card photo
+    let imageUrlVerso, publicIdVerso;
+    if (req.files.versoPhoto) {
+      const versoPhoto = req.files.versoPhoto;
+      const resultVersoPhoto = await uploadImageToCloudinary(versoPhoto.tempFilePath, 'assurExpress');
+
+      // Extract the URL and public_id from Cloudinary's response
+      imageUrlVerso = resultVersoPhoto.secure_url;
+      publicIdVerso = resultVersoPhoto.public_id;
+
+      // Optionally, delete the temporary file
+      try {
+        unlinkSync(versoPhoto.tempFilePath);
+      } catch (err) {
+        console.error('Error deleting temp file:', err);
+      }
+    }
+
+    // Check if at least one image was uploaded successfully
+    if (!imageUrlRecto && !imageUrlVerso) {
+      return res.status(400).json({ message: "Échec du téléversement. Veuillez réessayer." });
+    }
+
+    // Here, you would store the image URLs and public IDs in your database 
+    const registrationCard = {
+      insuranceID: req.body.insuranceID,
+      registrationCardFront: {
+        cloudinaryID: publicIdRecto,
+        imageUrl: imageUrlRecto
+      },
+      registrationCardBack: {
+        cloudinaryID: publicIdVerso,
+        imageUrl: imageUrlVerso
+      }, 
+    };
+    try {
+      const newRegistrationCard = new RegistrationCard(registrationCard);
+      await newRegistrationCard.save();
+    } 
+    catch (error) {
+      console.log(error);
+      res.json({status: 500, message: "Erreur lors de l'enregistrement de la carte grise dans la base de données."})
+    }
+
+    // Send a response to the frontend
+    res.json({
+      imageURLs: { recto: imageUrlRecto, verso: imageUrlVerso },
+      publicIDs: { recto: publicIdRecto, verso: publicIdVerso },
+    });
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    res.status(500).json({ message: "Une erreur est survenue lors du téléchargement des fichiers." });
+  }
 };
 
 // New method to retrieve an image from Cloudinary
