@@ -1,5 +1,5 @@
 import express from 'express';
-require('dotenv').config; // load the environmental variable
+import dotenvConfig from 'dotenv/config.js' // load the environmental variable
 import connectDB from '../libs/dbConnect.js';
 import userRouter from '../routes/user.route.js';
 import insuranceRoutes from '../routes/insurance.route.js';
