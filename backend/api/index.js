@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Allow the communication between the frontend and backend 
 app.use(cors({
-  origin: process.env.CLIENT_URL, // Allow requests from the specified origin
+  origin: "https://assur-express.vercel.app", // Allow requests from the specified origin
   credentials: true // Enable credentials support
 }));
 
