@@ -8,7 +8,7 @@ import DOMPurify from 'dompurify'; // Importing DOMPurify to sanitize input fiel
 
 const DashboardPurchaseRecap = ({ initialData, nextStep }) => {
   // Handle the form with react-hook-form
-  const { handleSubmit, control, formState: { errors, isSubmitting } } = useForm({
+  const { handleSubmit, control, formState: { errors } } = useForm({
     defaultValues: initialData
   });
 

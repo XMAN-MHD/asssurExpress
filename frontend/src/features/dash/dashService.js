@@ -92,6 +92,26 @@ const uploadFiles = async ({insuranceID, files}) => {
     return data;
 };
 
+// delete a policy
+const deletePolicy = async (ID) => {
+    const response = await fetch(`${API_BASE_URL}/insurances/${ID}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include', // Include credentials (cookies, etc.)
+    });
+
+    // Check if response is OK
+    if (!response.ok) {
+        const errors = await response.json();
+        throw new Error(errors.message || 'Server returned an error');
+    }
+
+    const data = await response.json();
+    return data;
+};
+
 // export the services
-const dashService = { getPolicies, updateProfile, createPolicy, uploadFiles };
+const dashService = { getPolicies, updateProfile, createPolicy, uploadFiles, deletePolicy };
 export default dashService;

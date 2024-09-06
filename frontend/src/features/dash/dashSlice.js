@@ -48,6 +48,24 @@ export const uploadFiles = createAsyncThunk(
   }
 );
 
+// Async thunk to delete a policy
+export const deletePolicy = createAsyncThunk(
+  'policy/delete',
+  async (policyID, thunkAPI) => {
+    try {
+      return await dashService.deletePolicy(policyID);
+    } catch (error) {
+      // Create the error message 
+      const message = (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      //  Send the error message
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Define initial state
 const initialState = {
   handleMenu: false,
@@ -70,6 +88,12 @@ const initialState = {
   },
   newPolicy: {
     data: [],
+    isLoading: false,
+    isSuccess: false,
+    isError: false,
+    message: ''
+  },
+  deletePolicy: {
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -275,6 +299,24 @@ export const dashboardSlice = createSlice({
         state.fileUpload.isLoading = false;
         state.fileUpload.isError = true;
         state.fileUpload.message = action.payload;
+      })
+      .addCase(deletePolicy.pending, (state) => {
+        state.deletePolicy.isLoading = true;
+        state.deletePolicy.isSuccess = false;
+        state.deletePolicy.isError = false;
+        state.deletePolicy.message = '';
+      })
+      .addCase(deletePolicy.fulfilled, (state, action) => {
+        state.deletePolicy.isLoading = false;
+        state.deletePolicy.isSuccess = true;
+        state.deletePolicy.isError = false;
+        state.deletePolicy.message = 'Assurance supprimée avec succès.';
+      })
+      .addCase(deletePolicy.rejected, (state, action) => {
+        state.deletePolicy.isLoading = false;
+        state.deletePolicy.isSuccess = false;
+        state.deletePolicy.isError = true;
+        state.deletePolicy.message = action.payload;
       });
   }
 });

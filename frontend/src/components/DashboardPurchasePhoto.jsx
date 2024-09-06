@@ -4,23 +4,17 @@ import { useForm } from 'react-hook-form';
 import { Button, Flex, Heading, Input, Box, FormControl, FormLabel, useColorModeValue, FormErrorMessage } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { uploadFiles } from '../features/dash/dashSlice';
+import { uploadFiles, deletePolicy } from '../features/dash/dashSlice';
 
 const DashboardPurchasePhoto = ({ nextStep }) => {
   // Retrieve the policy data saved recently
   const { 
     data: newPolicyData, 
-    isLoading: newPolicyLoading, 
-    isSuccess: newPolicySucceded, 
-    isError: newPolicyFailed, 
-    message: newPolicyMessage 
   } = useSelector(state => state.dashboard.newPolicy);
   
   // Retrieve file uploading slice data  
   const { 
-    isLoading, 
-    isSuccess, 
-    isError, 
+    isLoading,  
     message
   } = useSelector(state => state.dashboard.fileUpload);
 
@@ -54,8 +48,20 @@ const DashboardPurchasePhoto = ({ nextStep }) => {
   };
 
   // Handle the previous step navigation
-  const handlePrev = () => {
-    nextStep('purchaseOwner'); // Navigate back to vehicle owner
+  const handlePrev = async() => {
+    try {
+      const result = await dispatch(deletePolicy(newPolicyData.insuranceId)).unwrap();
+      if (result) {
+        // Navigate back to the beginning of purchasing a policy
+        toast.success("Assurance annulé avec succés");
+        nextStep('purchaseType'); 
+      }
+    } 
+    catch (error) {
+      console.log(error);
+      toast.error("Erreur interne du serveur");
+    }
+    
   };
 
   return (

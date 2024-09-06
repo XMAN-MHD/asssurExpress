@@ -14,10 +14,11 @@ const Services = () => {
   
   // Color mode value
   const primaryColor = useColorModeValue('primary.100');
+  
 
   // VIEW
   return (
-    <Box as='section' bg={"#e9fbf0"} pb={12}>
+    <Box as='section' bg={primaryColor} pb={12}>
       {/* Main container using Flexbox for layout */}
       <Flex
         as="section"

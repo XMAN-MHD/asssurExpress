@@ -38,25 +38,25 @@ const DashboardPurchaseCompany = ({ nextStep }) => {
           <RadioGroup onChange={setCompany} value={company}>
             <Flex gap={4} direction={{base: 'column', lg: 'row'}}>
               <Flex gap={4} flexDirection={{base: 'column', lg: 'row'}}>
-                <Flex flexDirection={{ base: 'column' }} gap={4}>
+                <Flex flexDirection={{ base: 'row', md: 'column' }} justifyContent={{base: "space-between"}} gap={4}>
                   {/* Radio buttons for selecting an insurance company */}
                   <Radio value="Allianz">Allianz</Radio>
                   <Radio value="Askia">Askia</Radio>
                   <Radio value="SAS">SAS</Radio>
                 </Flex>
-                <Flex flexDirection={{ base: 'column' }} gap={4}>
+                <Flex flexDirection={{ base: 'row', md: 'column' }} justifyContent={{base: "space-between"}} gap={4}>
                   <Radio value="Amsa">Amsa</Radio>
                   <Radio value="AXA">AXA</Radio>
                   <Radio value="Cnart">Cnart</Radio>
                 </Flex>
               </Flex>
               <Flex gap={4} flexDirection={{base: 'column', lg: 'row'}}>
-                <Flex flexDirection={{ base: 'column' }} gap={4}>
+                <Flex flexDirection={{ base: 'row', md: 'column' }} justifyContent={{base: "space-between"}} gap={4}>
                   <Radio value="La providence">La providence</Radio>
                   <Radio value="PA">PA</Radio>
                   <Radio value="Saar">Saar</Radio>
                 </Flex>
-                <Flex flexDirection={{ base: 'column' }} gap={4}>
+                <Flex flexDirection={{ base: 'row', md: 'column' }} justifyContent={{base: "space-between"}} gap={4}>
                   <Radio value="Sanlam">Sanlam</Radio>
                   <Radio value="Salama">Salama</Radio>
                   <Radio value="SUNU">SUNU</Radio>
@@ -65,7 +65,7 @@ const DashboardPurchaseCompany = ({ nextStep }) => {
             </Flex>
           </RadioGroup>
         </FormControl>
-        <Flex gap={4} direction={{base: 'column', md: 'row'}}>
+        <Flex gap={4} direction={{base: 'column', md: 'row'}} w={'100%'}>
           {/* Button to go to the previous step */}
           <Button onClick={handlePrev} bg={secondaryBtnBgColor} _hover={{ bgColor: 'gray.800' }} mt={5}>Précédent</Button>
           {/* Button to go to the next step */}

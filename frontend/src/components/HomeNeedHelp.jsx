@@ -88,7 +88,7 @@ const ContactBox = ({ icon, title, contactInfo }) => {
       p={6}
       direction="row"
       textAlign="left"
-      bg="primary.50"
+      bg="primary.100"
       justifyContent="flex-start"
       alignItems="center"
       wrap="nowrap"

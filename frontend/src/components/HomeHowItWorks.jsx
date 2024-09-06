@@ -75,7 +75,7 @@ const StepBox = ({ icon, title, description }) => {
       p={6}
       direction="column"
       textAlign="center"
-      bg="primary.50"
+      bg="primary.100"
       justifyContent="center"
       alignItems="center"
     >
