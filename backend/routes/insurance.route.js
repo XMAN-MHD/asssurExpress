@@ -12,8 +12,8 @@ import { verifyToken } from '../libs/middleware.js';
 const router = express.Router();
 
 // Define routes for insurances
-router.post('/', createInsurance);
-router.get('/', getUserInsurances);
+router.post('/', verifyToken, createInsurance);
+router.get('/', verifyToken, getUserInsurances);
 router.get('/:id', verifyToken, getInsuranceById);
 router.patch('/:id', verifyToken, updateInsurance);
 router.delete('/:id', verifyToken, deleteInsurance);

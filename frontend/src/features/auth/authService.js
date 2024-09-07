@@ -38,7 +38,6 @@ const login = async (userData) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(userData),
-        credentials: 'include' // Include credentials (cookies, etc.)
     });
 
     // Check if response is OK
@@ -55,6 +54,7 @@ const login = async (userData) => {
     // Store user data in localStorage
     if (data) {
         localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('token', response.token)
     }   
 
     return data;

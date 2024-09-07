@@ -25,12 +25,13 @@ const createPolicy = async (policyData) => {
 
 // fetch assurance data from the backend 
 const getPolicies = async () => {
+    const token = localStorage.getItem('token');
     const response = await fetch(`${API_BASE_URL}/insurances/`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Replace with actual token
         },
-        credentials: 'include' // Include credentials (cookies, etc.)
     });
 
     // Check if response is OK
