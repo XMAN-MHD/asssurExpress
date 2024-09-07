@@ -17,7 +17,7 @@ const router = express.Router();
 
 // define routes for the users
 router.post('/signup', verifyToken, registerUser);
-router.post('/signin', verifyToken, logUser);
+router.post('/signin', logUser);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password/:token', verifyToken, resetPassword);
 router.get('/', verifyToken, getAllUsers);
