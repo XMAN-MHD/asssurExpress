@@ -159,22 +159,17 @@ export const logUser = async (req, res, next) => {
     //Generate JWT
     const token = jwt.sign({ id: userExists._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
     
-    // send response to the frontend
-    res.cookie('token', token, {
-        httpOnly: true, // Cookie is not accessible via JavaScript
-        secure: process.env.NODE_ENV === 'production', // Set to true in production
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
-      })
-      .status(200)
-      .json({
-        _id: userExists._id,
-        nom: userExists.nom,
-        prenom: userExists.prenom,
-        telephone: userExists.telephone,
-        email: userExists.email,
-        address: userExists.address,
-        avatar: userExists.avatar,
-      });
+    /// Send response with token in the body
+    res.status(200).json({
+      token, // Include the token in the response body
+      _id: userExists._id,
+      nom: userExists.nom,
+      prenom: userExists.prenom,
+      telephone: userExists.telephone,
+      email: userExists.email,
+      address: userExists.address,
+      avatar: userExists.avatar,
+    });
 
   } catch (error) {
     console.error("Error logging in user:", error);
