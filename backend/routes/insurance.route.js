@@ -13,7 +13,7 @@ const router = express.Router();
 
 // Define routes for insurances
 router.post('/', verifyToken, createInsurance);
-router.get('/', verifyToken, getUserInsurances);
+router.get('/', getUserInsurances);
 router.get('/:id', verifyToken, getInsuranceById);
 router.patch('/:id', verifyToken, updateInsurance);
 router.delete('/:id', verifyToken, deleteInsurance);
