@@ -16,7 +16,7 @@ import { verifyToken } from '../libs/middleware.js';
 const router = express.Router();
 
 // define routes for the users
-router.post('/signup', verifyToken, registerUser);
+router.post('/signup', registerUser);
 router.post('/signin', logUser);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password/:token', verifyToken, resetPassword);

@@ -2,13 +2,13 @@
 import { API_BASE_URL } from '../../utils/api';
 
 const register = async (userData) => {
+
     const response = await fetch(`${API_BASE_URL}/users/signup`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData),
-        credentials: 'include' // Include credentials (cookies, etc.)
     });
 
     // Check if response is OK
@@ -25,6 +25,7 @@ const register = async (userData) => {
     // Store user data in localStorage
     if (data) {
         localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('token', data.token);
     }   
 
     return data;
@@ -32,10 +33,11 @@ const register = async (userData) => {
 
 
 const login = async (userData) => {
+
     const response = await fetch(`${API_BASE_URL}/users/signin`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json', 
         },
         body: JSON.stringify(userData),
     });
@@ -62,12 +64,14 @@ const login = async (userData) => {
 
 // Update user profile
 const updateUser = async (userData) => {
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`${API_BASE_URL}/users/update/${userData.id}`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${token}`,
         },
-        credentials: 'include', // Include credentials (cookies, etc.)
         body: JSON.stringify(userData)
     });
 

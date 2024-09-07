@@ -3,12 +3,14 @@ import { API_BASE_URL } from '../../utils/api';
 
 // Save assurance data to the database 
 const createPolicy = async (policyData) => {
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`${API_BASE_URL}/insurances/`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${token}`
         },
-        credentials: 'include', // Include credentials (cookies, etc.)
         body: JSON.stringify(policyData)
     });
 
@@ -26,12 +28,12 @@ const createPolicy = async (policyData) => {
 // fetch assurance data from the backend 
 const getPolicies = async () => {
     const token = localStorage.getItem('token');
-    console.log('token : ' + token);
+    
     const response = await fetch(`${API_BASE_URL}/insurances/`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Replace with actual token
+            'Authorization': `Bearer ${token}`, // Send the token
         },
     });
 
@@ -47,12 +49,14 @@ const getPolicies = async () => {
 
 // Update user profile
 const updateProfile = async (userData) => {
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`${API_BASE_URL}/users/update/${userData.id}`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // send the token
         },
-        credentials: 'include', // Include credentials (cookies, etc.)
         body: JSON.stringify(userData)
     });
 
@@ -68,6 +72,7 @@ const updateProfile = async (userData) => {
 
 // Upload files (vehicle registration card) to the server
 const uploadFiles = async ({insuranceID, files}) => {
+    const token = localStorage.getItem('token');
     // Create a FormData object to handle file uploads
     const formData = new FormData();
 
@@ -80,8 +85,10 @@ const uploadFiles = async ({insuranceID, files}) => {
 
     const response = await fetch(`${API_BASE_URL}/cloudinary/uploadImage`, {
         method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`, // send the token
+        },
         body: formData,
-        credentials: 'include', // Include credentials (cookies, etc.)
     });
 
     // Check if response is OK
@@ -96,12 +103,14 @@ const uploadFiles = async ({insuranceID, files}) => {
 
 // delete a policy
 const deletePolicy = async (ID) => {
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`${API_BASE_URL}/insurances/${ID}`, {
         method: 'DELETE',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${token}`, // send the token
         },
-        credentials: 'include', // Include credentials (cookies, etc.)
     });
 
     // Check if response is OK
