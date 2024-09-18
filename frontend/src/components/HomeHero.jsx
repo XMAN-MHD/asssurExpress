@@ -52,7 +52,7 @@ const Hero = () => {
           mb={4}
           color="white"
         >
-          Bienvenue Assur'Express
+          Bienvenue Chez Assur'Express
         </Text>
         {/* Subheading/description */}
         <Text
