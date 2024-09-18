@@ -41,7 +41,7 @@ const DashboardPurchasePhoto = ({ nextStep }) => {
       
       if (result) {
         toast.success("Fichiers téléchargés avec succès!");
-        navigate('/dashboard');
+        navigate('/');
       } else {
         toast.error(message || "Une erreur est survenue lors du téléchargement des fichiers.");
       }
