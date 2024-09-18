@@ -119,7 +119,7 @@ function SignUp() {
                     message: 'Numéro de téléphone invalide.'
                   }
                 })}
-                _focus={{ borderColor: 'primary.500', boxShadow: '0 0 0 1px var(--chakra-colors-primary-500)' }}
+                _focus={{ borderColor: 'primary.500', boxShadow: '0 0 1px var(--chakra-colors-primary-500)' }}
                 aria-label="Téléphone"
               />
               <FormErrorMessage>{errors.telephone && errors.telephone.message}</FormErrorMessage>

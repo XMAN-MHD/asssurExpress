@@ -3,10 +3,14 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Flex, Heading, Input, Box, FormControl, FormLabel, useColorModeValue, FormErrorMessage } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { uploadFiles, deletePolicy } from '../features/dash/dashSlice';
 
 const DashboardPurchasePhoto = ({ nextStep }) => {
+  // Hooks from react router dom
+  const navigate = useNavigate();
+
   // Retrieve the policy data saved recently
   const { 
     data: newPolicyData, 
@@ -37,7 +41,7 @@ const DashboardPurchasePhoto = ({ nextStep }) => {
       
       if (result) {
         toast.success("Fichiers téléchargés avec succès!");
-        nextStep('purchasePayment');
+        navigate('/dashboard');
       } else {
         toast.error(message || "Une erreur est survenue lors du téléchargement des fichiers.");
       }
