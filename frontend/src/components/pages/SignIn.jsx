@@ -75,9 +75,12 @@ function SignIn() {
       gap={8} // Espacement entre les éléments enfants
     >
       <Box maxW="sm"> {/* Conteneur pour le titre */}
+        
+        {/* 
         <Heading as="h1" textAlign="center">
           Connexion
         </Heading>
+        */}
       </Box>
       <Box maxW="sm" mx="auto" borderWidth={1} borderRadius="md" boxShadow="lg" p={10}>
         <form onSubmit={handleSubmit(doSubmit)}> {/* Formulaire avec gestion de la soumission */}
