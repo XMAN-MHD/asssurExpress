@@ -78,9 +78,11 @@ function SignUp() {
       mt={[0, 0, -5]}
     >
       <Box maxW="sm">
+      {/*
         <Heading as="h1" textAlign="center">
           Inscription
         </Heading>
+      */}
       </Box>
       <Box maxW="sm" width="full" mx="auto" borderWidth={1} borderRadius="md" boxShadow="lg" p={5}>
         <form onSubmit={handleSubmit(doSubmit)}>
